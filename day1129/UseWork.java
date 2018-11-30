@@ -21,7 +21,7 @@ public class UseWork {
 
 //		Work22 temp = dataArr[0];
 
-		for (Work22 tempWork : dataArr) {
+		for (Work22 tempWork : dataArr) {//tempWork는 Work22의객체!!!!!
 			sumage+=tempWork.getAge();
 			if (tempWork.getAdd().contains("서울")) {
 					con_s++;

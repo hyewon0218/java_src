@@ -7,7 +7,7 @@ import day1129.sub.Person;
  * 정의한 클래스<br>
  * @author SIST
  */
-public class Clark extends Person{
+public final class Clark extends Person{
 	public int power;
 	
 	/**

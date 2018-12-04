@@ -1,4 +1,4 @@
-package day1129.sub;
+package day1129;
 
 /**
  * 사람을 추상화하여 만드는 클래스<br>

@@ -1,6 +1,6 @@
 package day1129;
 
-import day1129.sub.Person;
+import day1129.Person;
 
 /**
  * 사람의 공통 특징을 부모(Person)로부터 사용하고 자신만의 

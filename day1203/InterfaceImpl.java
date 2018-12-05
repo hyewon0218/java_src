@@ -8,9 +8,11 @@ package day1203;
  */
 public class InterfaceImpl implements SuperInterface {
 
+	@Override	
 	public String msg() {//interA
 		return "내일은 화요일";
 	}
+	@Override
 	public String msgB() {//interB
 		return "오늘은 월요일";
 	}

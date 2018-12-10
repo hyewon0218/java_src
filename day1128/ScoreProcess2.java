@@ -108,7 +108,7 @@ public class ScoreProcess2 {
 				minScore=score[i];
 			}
 		}
-		for() 
+//		for() 
 		
 		//5. 일등 학생의 이름과 총점,번호
 		System.out.printf("TOP 번호[] 이름[] 총점[] -------------------------------------");

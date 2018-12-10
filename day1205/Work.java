@@ -4,7 +4,7 @@ import java.util.StringTokenizer;
 
 public class Work {
 
-	public String[] getName(String names) {
+	public String[] getName(String names) {//main에서받음
 		
 		StringTokenizer stk=new StringTokenizer(names,",.~!");
 		String[] name =new String[stk.countTokens()];

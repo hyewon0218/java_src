@@ -25,7 +25,7 @@ public class ScoreProcessor {
 
 	public void printScore(int cnt) {
 
-		int[] idx = new int[name.size()];// 0으로초기화/idx중복갑x
+		int[] idx = new int[name.size()];// 0으로초기화/idx중복값x
 		int sumOfScore = 0;
 		Random r = new Random();
 

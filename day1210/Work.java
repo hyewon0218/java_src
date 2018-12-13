@@ -57,7 +57,7 @@ public class Work extends Frame {
 	panelCenter.setLayout(new GridLayout(1,2));
 	Panel pCenterLeft=new Panel();
 	panelCenter.add(pCenterLeft);
-	panelCenter.add(taCenter);
+	panelCenter.add(taCenter);////////////////
 	
 	pCenterLeft.setLayout(new GridLayout(4, 2));
 	pCenterLeft.add(lblName);
@@ -75,6 +75,7 @@ public class Work extends Frame {
 	Checkbox cb2 =new Checkbox("³²ÀÚ",false , cg);
 	panelGen.add(cb1);
 	panelGen.add(cb2);
+	
 	
 	
 	

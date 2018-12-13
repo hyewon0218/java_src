@@ -119,13 +119,13 @@ public class UseString {
 		//split은 한번에 하나의 문자로 구분하여 자른다.
 		String[] arr=data.split("[.]");//.은 그냥 쓰면 구분되지 않는다.[]묶어서 쓴다. 
 		System.out.println("구분된 배열 방의 갯수 :"+arr.length);
-		for(String name : arr) {
+		for(String name : arr) 
 			System.out.println(name);
-		}
+		}//main
 		
 		
 		
 		
-	}//main
+	}//class
 
-}//class
+

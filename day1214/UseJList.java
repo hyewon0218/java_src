@@ -122,14 +122,14 @@ public class UseJList extends JFrame implements ActionListener,MouseListener/*, 
 //		//클릭했을 때 한번불리게
 //		// 선택된 아이템(JList)의 값(DefaultListModel)을 얻어와서
 //		if (flag ) {
-//			int idx=jl.getAnchorSelectionIndex();//list(jl)에 접근 1번
-//			String value = dlm.get(jl.getSelectedIndex());
+//			int idx=jl.getSelectedIndex();//list(jl)에 접근 1번
+//			String value = dlm.get(idx);
 //			//JLabel에 추가
 //			jlOutput.setText(value);
 ////			System.out.println(value);
 //			
 //			//선택(View)된 값(Model)을 삭제 
-//			dlm.removeElement(idx);
+//			dlm.remove(idx);
 //		}
 //		flag=!flag;
 //	}

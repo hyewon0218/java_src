@@ -17,6 +17,7 @@ public class UseJOptionPane extends JFrame implements ActionListener {
 	private JLabel jlOutput;
 
 	public UseJOptionPane() {
+		
 		super("JOptionPane »ç¿ë");
 
 		btn1 = new JButton("Input Dialog");

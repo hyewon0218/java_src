@@ -22,6 +22,7 @@ public class UseTitledBorder extends JFrame implements ActionListener {
 	public UseTitledBorder() {
 		super("border 사용");
 		
+		
 		jtfid=new JTextField();
 		jpfPass=new JPasswordField();
 		jlOutput=new JLabel("결과 : ");

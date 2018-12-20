@@ -1,0 +1,17 @@
+.metadata
+.recommenders
+bokseup
+
+#javase_prj
+javase_prj/.settings
+javase_prj/bin
+javase_prj/doc
+javase_prj/.classpath
+
+
+#javase_prj2
+javase_prj2/.settings
+javase_prj2/bin
+javase_prj2/doc
+javase_prj2/.classpath
+javase_prj/.project

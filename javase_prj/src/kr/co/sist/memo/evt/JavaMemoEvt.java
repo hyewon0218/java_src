@@ -102,9 +102,9 @@ public class JavaMemoEvt extends WindowAdapter implements ActionListener {
 				flagClose = true;
 			}
 			
-			if(!flagClose) {//true일때만 실행됨
-				jm.dispose();
-			}
+		}
+		if(!flagClose) {//true일때만 실행됨
+			jm.dispose();
 		}
 	}
 

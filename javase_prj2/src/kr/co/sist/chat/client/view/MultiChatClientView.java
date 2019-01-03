@@ -7,7 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JViewport;
 import javax.swing.border.TitledBorder;
+
+import kr.co.sist.chat.client.evt.MultiChatClientEvt;
 
 @SuppressWarnings("serial")
 public class MultiChatClientView extends JFrame {
@@ -53,10 +56,18 @@ public class MultiChatClientView extends JFrame {
 		add("Center",jspTalkDisplay);
 		add("South",jtfTalk);
 		
+		MultiChatClientEvt mcce=new MultiChatClientEvt(this);//has a °ü°è
+		addWindowListener(mcce);
+		
+		jbtConnect.addActionListener(mcce);
+		jbtClose.addActionListener(mcce);
+		jbtCapture.addActionListener(mcce);
+		jtfTalk.addActionListener(mcce);
+
 		
 		setBounds(100, 100, 600, 350);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
 

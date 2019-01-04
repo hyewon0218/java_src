@@ -119,7 +119,7 @@ public class UseStatementCRUD {
 			StringBuilder deleteCpDept=new StringBuilder();
 			deleteCpDept.append("delete from cp_dept where deptno=").append(deptno);
 			
-			int cnt=stmt.executeUpdate(deleteCpDept.toString());
+			int cnt=stmt.executeUpdate(deleteCpDept.toString());//??
 			
 			if(cnt==1) {//부서번호 한건만/=!0으로 해도 됨
 				flag=true;
@@ -134,7 +134,7 @@ public class UseStatementCRUD {
 		return flag;
 	}
 	
-	public List<CpDeptVO>selectAllCpDept() throws SQLException {
+	public List<CpDeptVO> selectAllCpDept() throws SQLException {
 		List<CpDeptVO> list=new ArrayList<CpDeptVO>();
 		//1.드라이버로딩
 		try {
@@ -227,7 +227,7 @@ public class UseStatementCRUD {
 		
 		return ocdvo;
 	}
-	public List<Integer>selectAllCpDeptNo() throws SQLException {//모든부서조회
+	public List<Integer> selectAllCpDeptNo() throws SQLException {//모든부서조회
 		List<Integer> list=new ArrayList<Integer>();
 		
 		try {

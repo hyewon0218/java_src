@@ -150,7 +150,7 @@ public class RunUseStatementCRUD {
 		int rowCount=0;
 		try {
 			//DB에서 조회한 결과 받기
-			List<CpDeptVO>list=us_crud.selectAllCpDept();
+			List<CpDeptVO> list=us_crud.selectAllCpDept();
 			CpDeptVO cdv=null;
 			
 			rowCount=list.size();

@@ -52,7 +52,7 @@ public class RunUseStatementCRUD {
 				switch (se.getErrorCode()) {
 				case 1: errMmsg=deptno+"번 부서는 이미 존재합니다"; break;	
 				case 1438: errMmsg="부서번호는 두자리입니다."; break;	
-				case 12899: errMmsg="부서명은이나 위치가 너무 깁니다."; break;	
+				case 12899: errMmsg="부서명이나 위치가 너무 깁니다."; break;	
 				default : errMmsg="뎨둉합니다. 시스템에 문제가 발생했습니다. 잠시후에 다시 시도";
 				}
 				JOptionPane.showMessageDialog(null, errMmsg);

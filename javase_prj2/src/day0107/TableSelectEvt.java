@@ -52,6 +52,7 @@ public class TableSelectEvt extends WindowAdapter implements ActionListener{
 					"AND (utc.table_name=ucc.table_name(+)) " + 
 					"AND(utc.column_name=ucc.column_name(+))" ;
 			
+			//utc(3)기준 같은조건있으면 ucc(1)붙이기 outter join붙일테이블에(+)
 			pstmt=con.prepareStatement(selectTaInfo);
 			pstmt.setString(1, tabName);
 			

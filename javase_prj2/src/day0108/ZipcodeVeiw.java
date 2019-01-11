@@ -26,6 +26,7 @@ public class ZipcodeVeiw extends JFrame {
 		JTable tabZipcode=new JTable(dtmZipcode);
 		
 		tabZipcode.getTableHeader().setReorderingAllowed(false);//컬럼 이동 막기
+		tabZipcode.getTableHeader().setResizingAllowed(false);//컬럼의 크기변경 막기
 		tabZipcode.setRowHeight(24);
 		
 		tabZipcode.getColumnModel().getColumn(0).setPreferredWidth(60);

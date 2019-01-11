@@ -59,11 +59,10 @@ public class QueryView extends JFrame{
 		jcbDT.setBounds(260, 70, 90, 20);
 		jcbCon.setBounds(100, 150, 90, 20);
 		
-		 jbtP1.setBounds(260, 20, 60, 50);
-		 jbtP2.setBounds(440, 150, 60, 50);
+		 jbtP1.setBounds(260, 20, 60, 35);
+		 jbtP2.setBounds(440, 150, 60, 35);
 		 jbtTC.setBounds(300, 450, 100, 50);
 		 jbtNull.setBounds(450, 450, 100, 50);
-		 
 		 jta.setBounds(30, 200, 520, 200);
 		
 		add(jlbTN);

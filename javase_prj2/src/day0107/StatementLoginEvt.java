@@ -14,6 +14,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import oracle.jdbc.internal.OracleTypes;
+
 public class StatementLoginEvt extends WindowAdapter implements ActionListener {
 
 	private StatementLogin sl;

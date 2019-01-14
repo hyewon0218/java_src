@@ -49,8 +49,8 @@ public class NamecardDAO {
            pstmt.executeUpdate();
         }finally {
         //6.(1.)
-           if(pstmt!=null) {pstmt.close();};
-           if(con!=null) {con.close();};
+           if(pstmt!=null) {pstmt.close();}
+           if(con!=null) {con.close();}
            }//end finally
         }
       
@@ -70,7 +70,7 @@ public class NamecardDAO {
             
             con= GetConnection.getInstance().getConn(url, id, pass);
          //3
-            String selectNamecard="select name,addr,img from namecard order by input_date";
+            String selectNamecard="select name,addr,img from namecard order by input_date";//
             pstmt=con.prepareStatement(selectNamecard);
          //4.
          //5.

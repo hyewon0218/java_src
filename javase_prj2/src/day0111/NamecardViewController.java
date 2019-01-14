@@ -28,11 +28,12 @@ public class NamecardViewController extends WindowAdapter implements ActionListe
 		n_dao = NamecardDAO.getInstance();
 		setAllNamecard();// 테이블에 데이터 추가
 		imgPath="";//이거안하면null들어감!!
-	}
+	}// 매개생성자
 
 	@Override
 	public void windowClosing(WindowEvent ae) {
-	}
+		nv.dispose();
+	}//windowClosing
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -41,9 +42,8 @@ public class NamecardViewController extends WindowAdapter implements ActionListe
 		}
 		if (ae.getSource() == nv.getJbtImg()) {
 			selectFile();
-
 		}
-	}
+	}//actionPerformed
 
 	private void selectFile() {
 		FileDialog fdOpen = new FileDialog(nv, "이미지선택", FileDialog.LOAD);

@@ -34,6 +34,8 @@ public class LunchMainView extends JFrame implements ActionListener{
 	
 	private Calendar cal;
 	
+	public static String adminId;
+	
 	public LunchMainView(String adminName) {
 		super("도시락 관리 [ 로그인 계정 : "+adminName+" ]"); 
 		
@@ -42,8 +44,31 @@ public class LunchMainView extends JFrame implements ActionListener{
 		jtb=new JTabbedPane();
 		//도시락
 		String[] lunchColumns= {"번호","도시락코드","이미지","도시락명","가격"};
-		dtmLunch=new DefaultTableModel(lunchColumns,4);
-		jtLunch=new JTable(dtmLunch);
+		dtmLunch=new DefaultTableModel(lunchColumns,4) {
+			
+			public boolean isCellEditable(int row,int column) {
+				return false;
+			}
+		};
+		
+		
+		jtLunch=new JTable(dtmLunch) {
+			
+			@Override
+			public Class getColumnClass(int column) {
+				return getValueAt(0, column).getClass();//??
+			}
+		};
+		
+		//도시락 테이블의 크기 설정 : 전체 800,  이미지 w(122)x h(110)
+		jtLunch.getColumnModel().getColumn(0).setPreferredWidth(80);
+		jtLunch.getColumnModel().getColumn(1).setPreferredWidth(120);
+		jtLunch.getColumnModel().getColumn(2).setPreferredWidth(125);
+		jtLunch.getColumnModel().getColumn(3).setPreferredWidth(265);
+		jtLunch.getColumnModel().getColumn(4).setPreferredWidth(220);
+		
+		//테이블의 높이
+		jtLunch.setRowHeight(110);
 		
 		//정산
 		String[] calcColumns= {"번호","도시락명","수량","가격"};
@@ -122,6 +147,8 @@ public class LunchMainView extends JFrame implements ActionListener{
 		setDay();//JCB Day 설정
 		
 		LunchMainController lmc=new LunchMainController(this);
+		addWindowListener(lmc);
+		
 		jtb.addMouseListener(lmc);//탭에서 이벤트가 발생했을 때
 		jtLunch.addMouseListener(lmc);
 		jtOrder.addMouseListener(lmc);

@@ -1,5 +1,7 @@
 package kr.co.sist.lunch.admin.controller;
 
+import java.awt.GridLayout;
+import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -9,10 +11,15 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,8 +27,10 @@ import kr.co.sist.lunch.admin.model.LunchAdminDAO;
 import kr.co.sist.lunch.admin.view.LunchAddView;
 import kr.co.sist.lunch.admin.view.LunchDetailView;
 import kr.co.sist.lunch.admin.view.LunchMainView;
+import kr.co.sist.lunch.admin.vo.CalcVO;
 import kr.co.sist.lunch.admin.vo.LunchDetailVO;
 import kr.co.sist.lunch.admin.vo.LunchVO;
+import kr.co.sist.lunch.admin.vo.OrderVO;
 
 public class LunchMainController extends WindowAdapter implements ActionListener, MouseListener{
 
@@ -30,11 +39,17 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 	
 	public static final int DBL_CLICK=2;
 	
+	private String orderNum;
+	private String lunchName;
+	private int selectedRow;
+
+	
 	public LunchMainController(LunchMainView lmv) {
 		this.lmv=lmv;
 		la_dao=LunchAdminDAO.getInstance();
 		//도시락 목록을 설정한다.
 		setLunch();
+		orderNum="";
 	}//LunchMainController
 	
 	/**
@@ -85,7 +100,80 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 	}//windowClosing
 	
 	@Override
+	public void windowClosed(WindowEvent e) {
+		System.exit(0);//JVM의 모든 인스턴스를 종료
+	}
+	
+	private void searchOrder () {
+		try {
+			List<OrderVO>list=la_dao.selectOrderList();
+			DefaultTableModel dtm=lmv.getDtmOrder();
+			dtm.setRowCount(0);//초기화!
+			
+			Vector<Object>vec=null;//여러가지데이터들어가서object 백터부모 리스트
+			OrderVO ovo=null;
+			for(int i=0; i<list.size(); i++){
+				ovo=list.get(i);//리스트방에있는거꺼내와서담아줌
+				vec=new Vector<Object>();
+				
+				vec.add(new Integer(i+1));//꼭 백터로 생성해야
+				vec.add(ovo.getOrderNum());
+				vec.add(ovo.getLunchCode());
+				vec.add(ovo.getLunchName());
+				vec.add(ovo.getOrderName());
+				vec.add(ovo.getQuan());
+				vec.add(ovo.getPrice());
+				vec.add(ovo.getOrdeDate());
+				vec.add(ovo.getPhone());
+				vec.add(ovo.getIpAddress());
+				vec.add(ovo.getStatus());
+				//추가 
+				dtm.addRow(vec);
+				
+				
+			}//end for
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
 	public void mouseClicked(MouseEvent me) {
+		if(me.getSource()==lmv.getJtb()) {/////
+			if(lmv.getJtb().getSelectedIndex()==1) {//처음 탭에서 이벤트 발생
+				//현재까지의 주문사항을 조회 
+				searchOrder();
+			}//end if
+		}//end if
+		
+		if(me.getSource()==lmv.getJtOrder() && me.getButton()==MouseEvent.BUTTON3) {
+			JTable jt=lmv.getJtOrder();
+			//마우스 포인터가 클릭되면 테이블에서 클릭한 행을 가져오는 일????????????????????????
+			 int r = jt.rowAtPoint(me.getPoint());
+		        if (r >= 0 && r < jt.getRowCount()) {
+		        	jt.setRowSelectionInterval(r, r);//시작행과 끝행 사이의 행을 선택하는 일 같은거니까 한행선택한것
+		        } else {
+		        	jt.clearSelection();
+		        }//end else
+		        //선택한 행을 넣는다.??
+		        selectedRow=r;
+			
+			JPopupMenu jp=lmv.getJpOrderMenu();
+			jp.setLocation(me.getXOnScreen(), me.getYOnScreen());
+			jp.setVisible(true);
+			
+			orderNum=(String)jt.getValueAt(jt.getSelectedRow(), 1);///////////////우클릭이선택되지않아서
+			lunchName=(String)jt.getValueAt(jt.getSelectedRow(), 3)+" "+(String)jt.getValueAt(jt.getSelectedRow(), 4);//도시락명,주문자명
+			
+			System.out.println((String)jt.getValueAt(jt.getSelectedRow(), 1));/////////////////////////////////////////
+		}else {
+			JPopupMenu jp=lmv.getJpOrderMenu();
+			jp.setVisible(false);
+			
+		}//end if
+		
 		switch(me.getClickCount()) {
 		case DBL_CLICK: ;//더블클릭 (2->상수로)
 		 	if(me.getSource()==lmv.getJtLunch()) {//도시락테이블에서 더블클릭이 되면 
@@ -99,9 +187,6 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 					se.printStackTrace();
 				}
 		 	}//end if
-		 	if(me.getSource()==lmv.getJtOrder()) {//주문테이블에서 더블클릭 
-		 		
-		 	}//end if
 		}	//end
 		
 	}//mouseClicked
@@ -111,10 +196,72 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		if(ae.getSource() == lmv.getJbtAddLunch()) {//도시락 추가 버튼
 			new LunchAddView(lmv,this);
 		}
-		if(ae.getSource() == lmv.getJcbMonch()) {
+		if(ae.getSource() == lmv.getJcbMonch()) {//월별 마지막 날 일자 변경 
 			setDay();
+		}//end if
+		
+		if(ae.getSource()== lmv.getJbtCalcOrder()) {//정산 버튼 클릭
+			searchCalc();
+		}
+		
+		if(ae.getSource()==lmv.getJmOrderRemove()) {
+//			JOptionPane.showConfirmDialog(lmv, "정말 삭제인 부분");
+		}
+		if(ae.getSource()==lmv.getJmOrderStatus()) {
+			switch(JOptionPane.showConfirmDialog(lmv, "["+orderNum+lunchName+"]"+"주문이 완료되었습니까?")) {
+			case JOptionPane.OK_OPTION:
+				  JTable jt=lmv.getJtOrder();
+				  jt.setValueAt("Y", selectedRow, 10);//테이블의 값만 변경
+				  lmv.getJpOrderMenu().setVisible(false);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+//2019-01-17 주문 변경은 내일				  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////				  
+			}//end switch
+			
 		}
 	}//actionPerformed
+	
+	/**
+	 * 년, 월, 일 정보를 가져와서 정산 
+	 */
+	private void searchCalc() {
+		int selYear=((Integer)lmv.getJcbYear().getSelectedItem()).intValue();//
+		int selMonth=((Integer)lmv.getJcbMonch().getSelectedItem()).intValue();
+		int selDay=((Integer)lmv.getJcbDay().getSelectedItem()).intValue();
+		
+		StringBuilder searchDate=new StringBuilder();
+		searchDate.append(selYear).append("-").append(selMonth).append("-").append(selDay);
+		
+		try {
+			//선택한 일자의 조회 결과를 받아서 JTable 출력
+			List<CalcVO> list=la_dao.selectCalc(searchDate.toString());
+			//JTable에 데이터를 추가하는 코드를 작성해보세요.
+			//데이터가 없는 날에는 "판매된 도시락이 없습니다."를 출력 
+			DefaultTableModel dtmCalc=lmv.getDtmCalc();
+			if(!list.isEmpty()) {
+				dtmCalc.setRowCount(0);
+			}
+			CalcVO cv=null;
+			Object[] rowData=null;
+			
+			for(int i=0; i<list.size(); i++) {
+				cv=list.get(i);
+				rowData=new Object[4];
+				rowData[0]=new Integer(i+1);
+				rowData[1]=cv.getLunchName()+"("+cv.getLunchCode()+")";
+				rowData[2]=new Integer(cv.getTotal());
+				rowData[3]=new Integer(cv.getPrice());
+				
+				dtmCalc.addRow(rowData);
+			}
+//			if(list.isEmpty()) {
+//				JOptionPane.showInternalMessageDialog(lmv, "판매된 도시락이 없습니다.");
+//			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}//end catch
+	}//searchCalc
+	
 	
 	/**
 	 * 월이 선택되면 해당 년의 해당 월의 마지막 날을 설정 
@@ -137,7 +284,7 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		for(int day=1; day < lastDay+1; day++ ) {
 			lmv.getCbmDay().addElement(day);//마지막 날 설정
 		}//end for
-		lmv.getCbmDay().setSelectedItem(new Integer(nowDay));//오늘을 선택한다.
+//		lmv.getCbmDay().setSelectedItem(new Integer(nowDay));//오늘을 선택한다.(오늘로 바뀜)
 	}
 	
 	@Override

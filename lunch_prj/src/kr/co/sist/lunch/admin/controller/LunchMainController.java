@@ -1,5 +1,6 @@
 package kr.co.sist.lunch.admin.controller;
 
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
@@ -191,6 +192,10 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		
 	}//mouseClicked
 	
+	private void msgCenter (Component parentComponent, String message) {////
+		JOptionPane.showMessageDialog(parentComponent, message);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource() == lmv.getJbtAddLunch()) {//도시락 추가 버튼
@@ -205,20 +210,61 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		}
 		
 		if(ae.getSource()==lmv.getJmOrderRemove()) {
-//			JOptionPane.showConfirmDialog(lmv, "정말 삭제인 부분");
-		}
+			//제작상태가 'N'인 상태에서만 동작
+			JTable jt=lmv.getJtOrder();
+			if( ((String)jt.getValueAt(selectedRow, 10)).equals("N") ) {//N일때만 동작하도록
+				switch(JOptionPane.showConfirmDialog(lmv, "["+orderNum+" "+lunchName+"] 주문정보를 삭제하시겠습니까?")) {
+				case JOptionPane.OK_OPTION:
+					
+					try {
+						if(la_dao.deleteOrder(orderNum)) {//DB Table에서 해당 레코드 삭제//////
+							msgCenter(lmv, orderNum+"주문이 삭제되었습니다.");
+							//주문 테이블 갱신
+							searchOrder();
+						}else {
+							msgCenter(lmv, orderNum+"주문이 삭제되지 않았습니다.");
+						}//end else
+					} catch (SQLException e) {
+						msgCenter(lmv, orderNum+"DB에서 문제 발생");
+						e.printStackTrace();
+					}//end catch
+				}//end switch
+			}else {
+				msgCenter(lmv, "제작된 도시락은 삭제할 수 없습니다.");///여러번 쓰인다면 메소드 만들어 간단하게
+			}//end else
+			 JPopupMenu jp=lmv.getJpOrderMenu();
+			  jp.setVisible(false);//popup메뉴 숨김
+		}//end if
+		
 		if(ae.getSource()==lmv.getJmOrderStatus()) {
+			//제작상태가 N인 상태에서만 동작 
+			JTable jt=lmv.getJtOrder();
+			if( ((String)jt.getValueAt(selectedRow, 10)).equals("N") ) {//N일때만 동작하도록
+				
 			switch(JOptionPane.showConfirmDialog(lmv, "["+orderNum+lunchName+"]"+"주문이 완료되었습니까?")) {
 			case JOptionPane.OK_OPTION:
-				  JTable jt=lmv.getJtOrder();
-				  jt.setValueAt("Y", selectedRow, 10);//테이블의 값만 변경
-				  lmv.getJpOrderMenu().setVisible(false);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-//2019-01-17 주문 변경은 내일				  
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////				  
+				//DB Table의 해당 레코드 변경 
+				try {
+					if(la_dao.updateStatus(orderNum)) {//상태변환 성공
+						jt.setValueAt("Y", selectedRow, 10);//테이블의 값만 변경
+//						lmv.getJpOrderMenu().setVisible(false);//제작완료되면 팝업메뉴사라지게
+						JOptionPane.showMessageDialog(lmv, "도시락 제작이 완료되었습니다.!!");
+				 
+						
+					}else {//상태변환 실패 
+						JOptionPane.showMessageDialog(lmv, "도시락 제작상태 변환이 실패!!!");
+					}//end else
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(lmv, "DB에서 문제 발생");
+					e.printStackTrace();
+				}//end catch  
 			}//end switch
-			
-		}
+		}else {
+			JOptionPane.showMessageDialog(lmv, "제작이 완료된 도시락입니다.");
+		}//end else
+			 JPopupMenu jp=lmv.getJpOrderMenu();
+			  jp.setVisible(false);
+		}//end if
 	}//actionPerformed
 	
 	/**
@@ -234,7 +280,7 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		
 		try {
 			//선택한 일자의 조회 결과를 받아서 JTable 출력
-			List<CalcVO> list=la_dao.selectCalc(searchDate.toString());
+			List<CalcVO> list=la_dao.selectCalc(searchDate.toString());//////////////////////////////////바인드변수와연결
 			//JTable에 데이터를 추가하는 코드를 작성해보세요.
 			//데이터가 없는 날에는 "판매된 도시락이 없습니다."를 출력 
 			DefaultTableModel dtmCalc=lmv.getDtmCalc();

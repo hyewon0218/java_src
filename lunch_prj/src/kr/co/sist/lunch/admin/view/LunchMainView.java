@@ -177,8 +177,8 @@ public class LunchMainView extends JFrame implements ActionListener{
 		jtb.addTab("정산", jpCalc);
 		
 		jpOrderMenu=new JPopupMenu();///////////////////
-		jmOrderRemove=new JMenuItem("주문삭제");
 		jmOrderStatus=new JMenuItem("제작완료");
+		jmOrderRemove=new JMenuItem("주문삭제");
 		
 		jpOrderMenu.add(jmOrderRemove);
 		jpOrderMenu.addSeparator();

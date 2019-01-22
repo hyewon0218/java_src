@@ -1,5 +1,6 @@
 package kr.co.sist.lunch.user.model;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +13,9 @@ import kr.co.sist.lunch.admin.view.LunchDetailView;
 import kr.co.sist.lunch.user.vo.LunchDetailVO;
 import kr.co.sist.lunch.user.vo.LunchListVO;
 import kr.co.sist.lunch.user.vo.OrderAddVO;
+import kr.co.sist.lunch.user.vo.OrderInfoVO;
+import kr.co.sist.lunch.user.vo.OrderListVO;
+import oracle.jdbc.internal.OracleTypes;
 
 /**
  * 도시락 주문자에 대한 DB 처리
@@ -112,7 +116,7 @@ public class LunchClientDAO {
 			con=getConn();
 		//3.
 			String selectLunch
-				="select img, lunch_name, spec, price from lunch where lunch_code=?";
+				="select img, lunch_name, spec, price ,ask from lunch where lunch_code=?";
 			pstmt=con.prepareStatement(selectLunch);
 		//4.
 			pstmt.setString(1, lunchCode);
@@ -143,7 +147,7 @@ public class LunchClientDAO {
 		//2.
 			con=getConn();
 		//3.
-			String insertOrder="insert into ordering(order_num,quan,order_name,phone,ip_address,lunch_code)values(order_code,?,?,?,?,?)";
+			String insertOrder="insert into ordering(order_num,quan,order_name,phone,ip_address,lunch_code,ask)values(order_code,?,?,?,?,?,?)";
 			pstmt=con.prepareStatement(insertOrder);
 		//4.
 			pstmt.setInt(1, oavo.getQuan());
@@ -151,6 +155,7 @@ public class LunchClientDAO {
 			pstmt.setString(3, oavo.getPhone());
 			pstmt.setString(4, oavo.getIpAddress());
 			pstmt.setString(5, oavo.getLunchCode());///////
+			pstmt.setString(6, oavo.getAsk());
 		//5.
 			pstmt.executeUpdate();
 		}finally {
@@ -162,13 +167,50 @@ public class LunchClientDAO {
 	}//insertOrder
 	
 	
-	public static void main(String[] args) {
+	public List<OrderListVO> selectOrderList(OrderInfoVO oivo)throws SQLException {
+		List<OrderListVO> list=new ArrayList<OrderListVO>();
+		
+		
+		Connection con=null;
+		CallableStatement cstmt=null;
+		ResultSet rs=null;
+		
 		try {
-			System.out.println(LunchClientDAO.getInstance().selectDetailLunch("L_000002"));
-		} catch (SQLException e) {
-			e.printStackTrace();
+		//1.
+		//2.
+			con=getConn();
+		//3.
+			cstmt=con.prepareCall("{call lunch_order_select(?,?,?)}");
+		//4.
+			//in parameter
+			cstmt.setString(1, oivo.getOrderName());
+			cstmt.setString(2, oivo.getOrderTel());
+			//out parameter
+			cstmt.registerOutParameter(3, OracleTypes.CURSOR);//////
+		//5.쿼리실행(프로시저 실행)
+			cstmt.executeQuery();
+			//out parameter에 저장된 값 자바의 변수(rs)로 저장
+			rs=(ResultSet)cstmt.getObject(3);
+			
+			
+			OrderListVO olvo=null;
+			
+			while(rs.next()) {
+				olvo=new OrderListVO(rs.getString("lunch_name"), 
+						rs.getString("order_date"),rs.getString("ask"), rs.getInt("quan"));
+				list.add(olvo);
+			}//end while
+		}finally {
+			//6.
+			if(rs!=null) {rs.close();}
+			if(cstmt!=null) {cstmt.close();}
+			if(con!=null) {con.close();}
 		}
-	}
+		
+		return list;
+	}//selectOrderList
+	
+	
 }//class
 
 

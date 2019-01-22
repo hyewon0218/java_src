@@ -16,6 +16,8 @@ import kr.co.sist.lunch.admin.vo.LunchDetailVO;
 import kr.co.sist.lunch.admin.vo.LunchUpdateVO;
 import kr.co.sist.lunch.admin.vo.LunchVO;
 import kr.co.sist.lunch.admin.vo.OrderVO;
+import kr.co.sist.lunch.user.vo.OrderAddVO;
+import kr.co.sist.lunch.user.vo.OrderListVO;
 
 public class LunchAdminDAO {
 	private static LunchAdminDAO la_dao;
@@ -162,6 +164,35 @@ public class LunchAdminDAO {
 	}
 	
 	/**
+	 * 요청사항 뽑아내기(추가)
+	 * @param orderNum
+	 * @return
+	 * @throws SQLException
+	 */
+	public String selectAsk(String orderNum) throws SQLException{
+		OrderAddVO oavo=null;
+		String msg="";
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+			con=getConn();
+			String selectAsk="select ask from ordering where lunch_code=?";
+			pstmt=con.prepareStatement(selectAsk);
+			pstmt.setString(1, orderNum);
+			if(rs.next()) {
+				oavo=new OrderAddVO(orderNum, rs.getString("phone"), rs.getString("ipAddress"), rs.getString("lunchCode"), rs.getString("ask"), rs.getInt("quan"));
+			}
+		}finally {
+			
+		}
+		
+		return msg;
+	}
+	
+	/**
 	 * 도시락 정보를 추가하는 일 
 	 * @param lav
 	 * @throws SQLException
@@ -186,9 +217,9 @@ public class LunchAdminDAO {
 			pstmt.setString(2, lav.getImg());
 			pstmt.setInt(3, lav.getPrice());
 			pstmt.setString(4, lav.getSpec());
-			pstmt.setString(5, LunchMainView.adminId);
+			pstmt.setString(5, LunchMainView.adminId);//
 		//5.
-			pstmt.executeQuery();
+			pstmt.executeQuery();//update?
 		}finally {
 			if(pstmt!=null) {pstmt.close();}
 			if(con!=null) {con.close();}
@@ -303,6 +334,7 @@ public class LunchAdminDAO {
 			.append("		from lunch l, ordering o	")
 			.append("		where o.lunch_code = l.lunch_code	")
 			.append("		 and to_char(o.order_date, 'yyyy-mm-dd') = to_char(to_date(?, 'yyyy-mm-dd'), 'yyyy-mm-dd')	")//바인드변수에 ''붙이지않는다!
+			.append("		 and o.status='Y' ")
 			.append("		group by l.lunch_code, l.lunch_name, l.price	")
 			.append("		order by l.lunch_code	");
 			

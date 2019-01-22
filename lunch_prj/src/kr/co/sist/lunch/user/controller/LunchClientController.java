@@ -7,13 +7,23 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.naming.directory.SearchControls;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.lunch.user.model.LunchClientDAO;
@@ -21,6 +31,8 @@ import kr.co.sist.lunch.user.view.LunchClientView;
 import kr.co.sist.lunch.user.view.LunchOrderDetailView;
 import kr.co.sist.lunch.user.vo.LunchDetailVO;
 import kr.co.sist.lunch.user.vo.LunchListVO;
+import kr.co.sist.lunch.user.vo.OrderInfoVO;
+import kr.co.sist.lunch.user.vo.OrderListVO;
 
 public class LunchClientController extends WindowAdapter implements ActionListener, MouseListener{
 
@@ -33,7 +45,14 @@ public class LunchClientController extends WindowAdapter implements ActionListen
 		this.lcv=lcv;
 		lc_dao=LunchClientDAO.getInstance();
 		
-		setLunchList();
+		try {
+			String[] fileName=lunchImageList();//클라이언트가 가진 이미지를 체크하여
+			lunchImageSend(fileName);//서버로 보내 없는 이미지를 받은 후 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}//end catch
+		
+		setLunchList();//JTable을 갱신
 	}//LunchClientController
 	
 	/**
@@ -92,6 +111,14 @@ public class LunchClientController extends WindowAdapter implements ActionListen
 	}
 	@Override
 	public void mouseClicked(MouseEvent me) {
+		if(lcv.getJtp().getSelectedIndex()==0) {
+			lcv.setTitle("재찬 도시락 주문");			
+		}//end if
+		if(lcv.getJtp().getSelectedIndex()==1) {
+			lcv.setTitle("재찬 도시락 주문 조회");
+		}//end if
+		
+		if(me.getSource() ==lcv.getJtLunch()) {
 		switch(me.getClickCount()) {
 		case DBL_CLICK:
 			JTable jt=lcv.getJtLunch();
@@ -109,11 +136,176 @@ public class LunchClientController extends WindowAdapter implements ActionListen
 				se.printStackTrace();
 			}
 			
+			
 //			System.out.println(lunch_code);
 //			JOptionPane.showMessageDialog(lcv, "");
-		}
+			}//end switch
+		}//end if
+		
+		
+		
 	}//mouseClicked
+	
+	/**
+	 * 주문자명과 전화번호를 가지고 도시락을 조회 
+	 */
+	private void searchLunchOrder() {
+		JTextField jtfName=lcv.getJtfName();
+		String name=jtfName.getText().trim();
+		if(name.equals("")) {
+			msgCenter(lcv, "주문자명은 필수 입력!!!");
+			jtfName.setText("");
+			jtfName.requestFocus();
+			return;
+		}//end if
+		
+		JTextField jtfTel=lcv.getJtfTel();
+		String tel=jtfTel.getText().trim();
+		if(name.equals("")) {
+			msgCenter(lcv, "전화번호는 필수 입력!!!");
+			jtfTel.setText("");
+			jtfTel.requestFocus();
+			return;
+		}//end if
+		
+		
+		
+		
+		try {
+			//입력값을 사용하여 DB Table조회
+			List<OrderListVO> list=lc_dao.selectOrderList(new OrderInfoVO(name, tel));
+			//JTable 출력
+			DefaultTableModel dtmOrderList=lcv.getDtmOrderList();
+			dtmOrderList.setRowCount(0);
+			
+			String[] rowData=null;
+			
+			OrderListVO olv=null;
+			for(int i=0; i < list.size(); i++) {
+				olv=list.get(i);
+				rowData=new String[4];
+				rowData[0]=String.valueOf(i+1);
+				rowData[1]=olv.getLunchName();
+				rowData[2]=olv.getOrderDate();
+				rowData[3]=String.valueOf(olv.getQuan());
+				
+				dtmOrderList.addRow(rowData);///
+			}//end for
+			
+			if(list.isEmpty()) {
+				msgCenter(lcv, "입력한 정보로 조회된 결과가 없습니다.");
+			}else{
+				lcv.setTitle("재찬도시락 - 조회 [ "+ name+ " 님의 주문현황]");
+			}//end if
+			
+			jtfName.setText("");
+			jtfTel.setText("");
+			jtfName.requestFocus();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource()==lcv.getJtfName()) {
+			lcv.getJtfTel().requestFocus();
+		}//end if
+		if(ae.getSource()== lcv.getJbtSearch() || ae.getSource()==lcv.getJtfTel()) {
+			//주문한 도시락 목록 조회 
+			searchLunchOrder();
+		}//end if
+	}
+	
+	/**
+	 * 서버로 이미지를 보내고 없는 이미지를 받는 일 
+	 * @param fileName
+	 */
+	private void lunchImageSend(String[] fileNames) throws IOException{
+		Socket socket=null;
+		DataOutputStream dos=null;
+		DataInputStream dis=null;
+		
+		try {
+			socket=new Socket("211.63.89.155", 25000);
+			dos=new DataOutputStream(socket.getOutputStream());
+			dos.writeInt(fileNames.length);
+			
+			for(int i=0; i < fileNames.length;i++) {
+				dos.writeUTF(fileNames[i]);//서버로 전송
+			}
+			dos.flush();
+			
+			dis=new DataInputStream(socket.getInputStream());
+			//서버가 보내오는 파일의 갯수 저장
+			int fileCnt=dis.readInt();
+			
+			String fileName="";
+			int fileSize=0;
+			int filelLen=0;
+			FileOutputStream fos=null;//
+			
+			for(int i=0; i<fileCnt; i++) {
+				//전달받을 파일조각의 갯수
+				fileSize=dis.readInt();
+				//파일명 받기
+				fileName=dis.readUTF();
+				
+				fos=new FileOutputStream("C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/user/img/"+fileName);
+				byte[] readData=new byte[512];
+				
+				
+				while(fileSize > 0) {
+					
+					filelLen=dis.read(readData);//서버에서 전송한 파일조각을 읽어들여 
+					fos.write(readData,0,filelLen);//생성한 파일로 기록 
+					fos.flush();
+					fileSize--;
+					
+				}//end while
+				
+				
+			}//end for
+			
+		}finally {
+			if(dos!=null) {dos.close();}///////////
+			if(socket!=null) {socket.close();}
+		}
+	}//lunchImageSend
 
+	/**
+	 * 도시락 이미지 리스트  
+	 */
+	private String[] lunchImageList() {
+		String[] fileList=null;
+		String path="C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/user/img";
+				
+		File dir=new File(path);
+		fileList=dir.list();
+		
+		//큰 이미지(s_ 가 붙지 않은)만 배열에 넣으세요!!!!!
+		List<String> list=new ArrayList<>();
+		for(String f_name: dir.list()) {
+			if(!f_name.startsWith("s_")) {
+				list.add(f_name);
+			}//end if
+		}//end for
+		fileList=new String[list.size()];
+		list.toArray(fileList);
+		System.out.println(Arrays.toString(fileList));
+		
+		return fileList;
+	}//lunchImageList
+	
+	public LunchClientController() {
+		
+	}
+	
+//	public static void main(String[] args) {
+//		new LunchClientController().lunchImageList();
+//	}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {}
 
@@ -126,10 +318,6 @@ public class LunchClientController extends WindowAdapter implements ActionListen
 	@Override
 	public void mouseExited(MouseEvent e) {}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-	}
 
 }
 

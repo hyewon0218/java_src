@@ -23,7 +23,7 @@ public class LunchOrderDetailView extends JDialog{
 	
 	private JLabel jlLunchImg;
 	private JTextField jtfLunchName, jtfLunchPrice, jtfOrderName, jtfPhone,jtfTotalPrice;
-	private JTextArea jtaLunchSpec;
+	private JTextArea jtaLunchSpec,jtaAsk;
 	private JButton jbOrder, jbEnd;
 	private JComboBox<Integer> jbQuan;
 	
@@ -42,7 +42,7 @@ public class LunchOrderDetailView extends JDialog{
 		jtaLunchSpec=new JTextArea(ldvo.getSpec());
 		jtaLunchSpec.setEditable(false);
 		jtaLunchSpec.setBackground(Color.WHITE);
-		
+		jtaAsk=new JTextArea();
 	
 		//DB에서 조회한 값 설정
 	
@@ -64,6 +64,8 @@ public class LunchOrderDetailView extends JDialog{
 		JLabel jlOrderTel=new JLabel("전화번호");
 		JLabel jlLunchTotalPrice=new JLabel("총가격");
 		JLabel jlLunchSpec=new JLabel("특장점");
+		JLabel jlAsk=new JLabel("요청사항");
+		
 		
 		DefaultComboBoxModel<Integer> dlmQuan
 			=new DefaultComboBoxModel<Integer>();
@@ -76,7 +78,11 @@ public class LunchOrderDetailView extends JDialog{
 		
 		//배치
 		jlDetailTitle.setBounds(10, 25, 250, 30);
-		jlLunchImg.setBounds(10, 65, 244, 220);
+		jlLunchImg.setBounds(10, 65, 244, 220);///
+		
+		jlAsk.setBounds(10, 280, 80, 40);
+		jtaAsk.setBounds(10, 310, 244, 80);
+		jtaAsk.setBackground(Color.WHITE);
 		
 		 jlLunchName.setBounds(270, 65, 80, 25);
 		 jlLunchPrice.setBounds(270, 95, 80, 25);
@@ -131,6 +137,9 @@ public class LunchOrderDetailView extends JDialog{
 		add(jbOrder);
 		add(jbEnd);
 		
+		add(jlAsk);
+		add(jtaAsk);
+		
 		LunchOrderDetailController lodc=new LunchOrderDetailController(this, ldvo.getLunchCode());/////////////
 		addWindowFocusListener(lodc);
 		jbQuan.addActionListener(lodc);
@@ -181,6 +190,13 @@ public class LunchOrderDetailView extends JDialog{
 	public JComboBox<Integer> getJbQuan() {
 		return jbQuan;
 	}
+
+	public JTextArea getJtaAsk() {
+		return jtaAsk;
+	}
+
+
+	
 	
 	
 }//class

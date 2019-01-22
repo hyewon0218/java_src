@@ -9,6 +9,7 @@ public class LunchListVO {
 		this.lunchCode = lunchCode;
 		this.lunchName = lunchName;
 		this.lunchSpec = lunchSpec;
+		
 	}
 
 	public String getImg() {
@@ -32,6 +33,11 @@ public class LunchListVO {
 		return "LunchListVO [img=" + img + ", lunchCode=" + lunchCode + ", lunchName=" + lunchName + ", lunchSpec="
 				+ lunchSpec + "]";
 	}
+	
 
+
+
+	
+	
 
 }

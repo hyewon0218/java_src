@@ -33,7 +33,7 @@ import kr.co.sist.lunch.admin.vo.LunchDetailVO;
 import kr.co.sist.lunch.admin.vo.LunchVO;
 import kr.co.sist.lunch.admin.vo.OrderVO;
 
-public class LunchMainController extends WindowAdapter implements ActionListener, MouseListener{
+public class LunchMainController extends WindowAdapter implements ActionListener, MouseListener,Runnable{
 
 	private LunchMainView lmv;
 	private LunchAdminDAO la_dao;
@@ -44,6 +44,8 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 	private String lunchName;
 	private int selectedRow;
 
+	private Thread threadOrdering;
+	
 	
 	public LunchMainController(LunchMainView lmv) {
 		this.lmv=lmv;
@@ -143,11 +145,28 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 	@Override
 	public void mouseClicked(MouseEvent me) {
 		if(me.getSource()==lmv.getJtb()) {/////
-			if(lmv.getJtb().getSelectedIndex()==1) {//처음 탭에서 이벤트 발생
+			if(lmv.getJtb().getSelectedIndex()==1) {//두번째(주문) 탭에서 이벤트 발생
+				//실시간으로 DB를 조회하여 주문현황을 계속 갱신 
+				if (threadOrdering==null) {
+					threadOrdering=new Thread(this);
+					threadOrdering.start();
+				}
 				//현재까지의 주문사항을 조회 
-				searchOrder();
+//				searchOrder();
 			}//end if
 		}//end if
+	
+		if(me.getSource()==lmv.getJtOrder()) {
+			switch(me.getClickCount()) {
+			case DBL_CLICK:
+//				JTable jt=lmv.getJtOrder();
+//				((String)jt.getValueAt(selectedRow, 2)) {
+//				}
+//				if() {
+//					
+//				}
+			}
+		}
 		
 		if(me.getSource()==lmv.getJtOrder() && me.getButton()==MouseEvent.BUTTON3) {
 			JTable jt=lmv.getJtOrder();
@@ -168,7 +187,7 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 			orderNum=(String)jt.getValueAt(jt.getSelectedRow(), 1);///////////////우클릭이선택되지않아서
 			lunchName=(String)jt.getValueAt(jt.getSelectedRow(), 3)+" "+(String)jt.getValueAt(jt.getSelectedRow(), 4);//도시락명,주문자명
 			
-			System.out.println((String)jt.getValueAt(jt.getSelectedRow(), 1));/////////////////////////////////////////
+//			System.out.println((String)jt.getValueAt(jt.getSelectedRow(), 1));/////////////////////////////////////////
 		}else {
 			JPopupMenu jp=lmv.getJpOrderMenu();
 			jp.setVisible(false);
@@ -332,7 +351,21 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 		}//end for
 //		lmv.getCbmDay().setSelectedItem(new Integer(nowDay));//오늘을 선택한다.(오늘로 바뀜)
 	}
-	
+	@Override
+	public void run() {
+		//30초마다 한번씩 조회 수행 
+		try {
+			while(true) {
+				searchOrder();
+					Thread.sleep(1000*30);
+			}//end while
+		} catch (InterruptedException e) {
+				msgCenter(lmv, "주문조회중 문제 발생");
+				e.printStackTrace();
+			}//end catch
+		
+	}//run
+	///////////////////////////////////////////////////////////////
 	@Override
 	public void mousePressed(MouseEvent e) {}
 	@Override
@@ -341,5 +374,6 @@ public class LunchMainController extends WindowAdapter implements ActionListener
 	public void mouseEntered(MouseEvent e) {}
 	@Override
 	public void mouseExited(MouseEvent e) {}
+
 	
 }

@@ -26,6 +26,7 @@ public class LunchDetailVO {
 	public String getImg() {
 		return img;
 	}
+	
 	public int getPrice() {
 		return price;
 	}
@@ -35,6 +36,7 @@ public class LunchDetailVO {
 		return "LunchDetailVO [lunchCode=" + lunchCode + ", lunchName=" + lunchName + ", spec=" + spec + ", img=" + img
 				+ ", price=" + price + "]";
 	}
-	
+
+
 	
 }

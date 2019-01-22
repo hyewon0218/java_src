@@ -194,7 +194,7 @@ public class LunchMainController extends WindowAdapter
 		
 		switch( me. getClickCount() ) {
 		case  DBL_CLICK :
-			if( me.getSource() == lmv.getJtOrder()) {
+			if( me.getSource() == lmv.getJtOrder()) {////////////////////////////////////////Ãß°¡
 				JTable jt=lmv.getJtOrder();
 				String flag=(String)jt.getValueAt( jt.getSelectedRow(), 1);
 				if(map.containsKey(flag)) {

@@ -230,7 +230,7 @@ public class LunchClientController extends WindowAdapter implements ActionListen
 		DataInputStream dis=null;
 		
 		try {
-			socket=new Socket("211.63.89.130", 25000);
+			socket=new Socket("211.63.89.155", 25000);
 			dos=new DataOutputStream(socket.getOutputStream());
 			dos.writeInt(fileNames.length);
 			

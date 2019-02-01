@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+#wrap {
+	margin: 0px auto;
+	width: 800px;
+	height: 1000px;
+	border: 5px solid #1E1E1E
+}
+/* wrap의 width 따라감  relative면  */
+#header {
+	height: 100px;
+	background: #404040;
+	position: relative;
+	border-top: 3px solid #FF3399
+}
+
+#headerTitle {
+	font-family: 명조, 고딕;
+	font-size: 25px;
+	color: #FFFFFF;
+	text-align: center;
+	position: absolute;
+	top: 30px;
+	left: 250px;
+}
+
+#container {
+	height: 800px;
+	position: relative;
+}
+
+#con1 {
+	float: left;
+	margin-left: 20px;
+	margin-top: 20px;
+	width: 200px;
+	height: 60px;
+}
+
+#con2 {
+	float: right;
+	margin-right: 20px;
+	margin-top: 20px;
+	width: 180px;
+	height: 60px;
+}
+
+#con3 {
+	position: absolute;
+	top: 100px;
+	left: 50px;
+	width: 680px;
+	height: 50px;
+	font-size: 20px;
+	text-align: left;
+	font-family: 명조;
+	font-weight: bold;
+	border: 2px solid #1E1E1E
+}
+
+#con4 {
+	color: #FF3399
+}
+
+#con5 {
+	margin-top: 10px;
+}
+
+#con6 {
+	width: 650;
+	height: 700;
+	position: absolute;
+	top: 180px;
+	left: 50px
+}
+
+th {
+	background: #FF3399;
+	color: #FFFFFF;
+/* 	border: 1px solid #000000; */
+}
+
+table {
+	border-spacing: 0px
+}
+
+td {
+	 border: 1px solid #000000; 
+	height: 30px
+}
+
+.sum {
+	background: #EAEAEA
+}
+
+.center{
+	text-align: center;
+}
+.right {
+	text-align: right;
+}
+
+.pink {
+	background: #FF3399;
+	color: #FFFFFF
+}
+
+.strong {
+	font-weight: bold;
+}
+
+.price {
+	text-align: right;
+}
+
+#notice{
+	color: #FF3399;
+	width: 680px;
+	height: 50px;
+	margin-top: 30px;
+	text-align: center;
+	font-weight: bold;
+}
+
+#footer {
+	height: 120px;
+	height: 100px;
+	background: #404040;
+}
+#jeong{
+	text-align: right;
+}
+
+.footerTitle {
+	float: right;
+	font-size: 15px;
+	padding-top: 20px;
+	padding-right: 20px;
+	color: #FFFFFF
+}

@@ -203,6 +203,12 @@ public class LunchAdminDAO {
 		}//end finally
 	}//insertLunch
 	
+	/**
+	 * 도시락 정보를 삭제하는 일
+	 * @param code
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean deleteLunch(String code)throws SQLException {
 		boolean flag=false;
 		Connection con=null;

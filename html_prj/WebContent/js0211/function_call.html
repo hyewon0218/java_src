@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+ 	//사용자 동작에 의한 함수 호출
+ 	function test() {
+ 		//onload로 호출되면 <body>내의 정보가 loading 된 후 실행되기 때문에
+ 		//tag의 정보를 script 영역에서 얻을 수 있다. 
+ 		
+ 		//script영역에서 직접 호출하면 <body>가 로딩되기 전에 호출되므로 tag의 정보를
+ 		//script영역에서 얻을 수 없다. 
+ 		//var val=document.getElementById("temp");
+ 		//alert("test!!!!!"+val.value);
+ 		alert("test!!!!!");
+ 	}
+ 	
+ 	//test();
+</script>
+</head>
+<!-- <body onload="test()"> -->
+<body >
+<!-- <input type="text" id="temp" value="월요일"/> -->
+<label>클릭</label>
+<input type="button" value="클릭" class="btn" onclick="test()"/><br/>
+<label>키가 눌릴 때</label>
+<input type="text" class="inputBox" onkeydown="test()"/><br/>
+<label>키가 올라올 때</label>
+<input type="text" class="inputBox" onkeyup="test()"/><br/>
+<label>마우스커서가 들어갈 때</label>
+<img src="../common/images/img.png" style="border:2px solid #333" onmouseover="test()"/><br/>
+<label>마우스커서가 빠져나갈 때</label>
+<img src="../common/images/img.png" style="border:2px solid #333" onmouseout="test()"/><br/>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

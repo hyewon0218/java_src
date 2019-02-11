@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+#sum{color: #D80000}
+#img{background="http://localhost:8080/html_prj/common/images/sist_logo.jpg"}
+</style>
+<script type="text/javascript">
+	document.write("<table border='1'>");
+	document.write("<tr>");
+	for(var i=1; i<10; i++) {
+	document.write("<td width='40' align='center'>"+i+"</td>");
+	}	
+	document.write("</tr>");
+	
+	document.write("</table>");
+	
+	//1~31의 <option>을 가진 <select>를 생성
+	document.write("<div>");
+	document.write("<select>");
+	for(var i=1; i<32; i++) {
+	document.write("<option>"+i+"</option>");
+	}
+	document.write("</select>");
+	document.write("</div>");
+	
+	//1~100까지의 합을 출력
+	document.write("<div>");
+	for(var i=1; i<101; i++) {
+		sum=sum+i;
+	document.write("<div id='sum'>"+sum+"</div>");
+		
+	}
+	document.write("</div>");
+	
+	
+	document.write("<table border='1'>");
+	document.write("<tr>");
+	for(var j=1; i<10; j++) {	
+	for(var i=2; i<10; i++) {
+	/* document.write("<tr id='gugu'>"+2+'*'+j+'='+2*j+"</tr>");
+	document.write("<tr id='gugu'>"+3+'*'+j+'='+3*j+"</tr>"); */
+	}
+		document.write("<tr id='gugu'>"+i+'*'+j+'='+i*j+"</tr>"); 
+	}
+	document.write("<tr>");
+	document.write("</table>");
+	
+	
+/* 	document.write("<div>");
+	document.write("<img scr=' '>");
+	document.write("</div>"); */
+	
+	
+</script>
+</head>
+<body>
+<!--
+ 작성자 : SIST}
+ 작성일 : 2019. 2. 8.}
+ 내용: }
+-->
+</body>
+</html>

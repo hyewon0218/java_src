@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+	//while: 최소0번부터, 최대 조건까지 반복
+	
+	var i=1;//초기값
+	while(i<10) {//조건식
+		document.write("<h"+i+">오늘은 금요일<h"+i+">");//반복수행문장
+		i++;//증감식
+	}
+	
+	
+	//do~while : 최소 1번부터, 최대 조건까지 반복 
+	var j=0;//초기값
+	var checked="";
+	do{
+		//5점에 체크된 상태로 라디오 버튼을 제공
+		checked="";
+		if(j==5) {
+			checked="checked='checked'"
+		}
+		document.write("<input type='radio' name='score' value='"+j+"'>"+j+"점&nbsp;");//반복수행문장
+		j++;//증감식;
+	}while(j<11);
+</script>
+</head>
+<body>
+<!--
+ 작성자 : SIST}
+ 작성일 : 2019. 2. 8.}
+ 내용: }
+-->
+</body>
+</html>

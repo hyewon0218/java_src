@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+	#bloodTable{border-spacing: 0px }
+	td,th{border:1px solid #333; text-align: center;}
+	#btTitle{width: 80px}
+	#bsTitle{width: 300px}
+</style>
+<script type="text/javascript">
+	
+	var bloodType=prompt("당신의 혈액형을 입력해주세요");
+	
+	var output="";
+	switch(bloodType.toUpperCase()) {
+	case "A" : output="세심하고 치밀하다."; break;
+	case "B" : output="털털함. 내것이 아니면 관심없음."; break;
+	case "AB" : output="복잡함, 합리적임."; break;
+	case "O" : output="질긴 생명력, 자기밖에 모름."; break;
+	default : output="사람의 혈액형이 아닙니다."; 
+	}
+	
+	document.write("<table id='bloodTable' border='1'>");
+	document.write("<tr>");
+	document.write("<th id='btTitle'>혈액형</th>");
+	document.write("<th id='bsTitle'>특징</th>");
+	document.write("</tr>");
+	document.write("<tr>");
+	document.write("<td>"+bloodType+"</td><td>"+output+"</td>");
+	document.write("</tr>");
+	document.write("</table >");
+
+</script>
+</head>
+<body>
+<!--
+ 작성자 : SIST}
+ 작성일 : 2019. 2. 8.}
+ 내용: }
+-->
+</body>
+</html>

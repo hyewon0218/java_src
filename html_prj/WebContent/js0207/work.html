@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+
+<style type="text/css">
+ div{width: 500px; height: 400px; border: 1px solid #000000 }
+  
+marquee{width: 500px; height: 400px}
+</style>
+
+<script type="text/javascript">
+	
+	var direction=prompt("방향을 입력해주세요","up");
+	var msg=prompt("메세지", "");
+	
+	if(direction=="up") {
+		document.write("<div><marquee direction='up'>"+msg+"</marquee></div>")
+	}else if(direction=="down") {
+		document.write("<div><marquee direction='down'>"+msg+"</marquee></div>")
+	}else if(direction=="left") {
+		document.write("<div><marquee direction='left'>"+msg+"</marquee></div>")
+	}else if(direction=="right"){
+		document.write("<div><marquee direction='right'>"+msg+"</marquee></div>")
+	}else {
+		alert("올바른 방향을 입력해주세요");
+	}
+</script>
+
+</head>
+<body>
+</body>
+</html>
+
+

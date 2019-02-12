@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+	window.onload=function() {
+		//document.getElementById("range").addEventListener("range",)
+	}
+
+	function changeImg() {
+		var obj=document.frm;
+		
+		var size=obj.selsize.value;
+		var img=obj.resizeImg;
+		//var img=obj.resizeImg.width;//이렇게는안됨
+		
+		img.width=size;
+		//img=size;//이렇게안됨
+		//obj.resizeImg.width=size;//됨
+		
+	/* 	var x=obj.range.value;
+		var y=obj.img.width;
+	
+		x=y; */
+	}
+</script>
+</head>
+<body>
+	<div>
+	<form name="frm">
+	<img src="images/dice_1.png" name="resizeImg" width=30><br/>
+	30<input type="range" name="selsize" min="30" max="300" id="range" onmousemove="changeImg()">300
+	</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+	#diceWrap{border:1px solid #333; width: 500px; height: 400px; box-shadow: 10px 10px 10px #333; margin-left: 100px; margin-top: 10px;}
+	#inputHeader{height: 150px;}
+	#score{height: 30px; text-align: center}
+	#diceView{width: 500px; text-align: center; margin-top: 50px}
+	h2{text-align: center;}
+	
+</style>
+<script type="text/javascript">
+	window.onload=function() {
+		setDice();
+		document.getElementById("btn1").addEventListener("click", input);//좋은방법!
+		document.getElementById("btn2").addEventListener("click", throwDice);//좋은방법!
+		document.getElementById("btn3").addEventListener("click", reset);//좋은방법!
+		//document.getElementById("btn").addEventListener("click", throwDice);//좋은방법!
+		document.getElementById("radio1").addEventListener("click", selectPlayer);
+		document.getElementById("radio2").addEventListener("click", selectPlayer);
+	
+	}
+	function throwDice() {
+		setDice();
+		
+	}
+	
+	function selectPlayer() {
+		var obj=document.frm;
+		
+		var x=obj.turn1.checked;
+		var y=obj.turn2.checked;
+		
+		//선택하지 않았다면 alert창 2개선택되었다면 하나지우기
+		if(x=false&&y=false) {
+			alert("사용자를 선택해주세요");
+		}else if(x=true&&y=true) {
+			x=false&&y=false;
+		}else {
+			
+		}
+	}
+	
+	function setDice() {
+		var obj=document.frm;
+		
+		var num1=parseInt(Math.random()*6)+1;//1에서부터6까지
+		var num2=parseInt(Math.random()*6)+1;
+		
+		obj.dice1.src="images/dice_"+num1+".png";
+		obj.dice2.src="images/dice_"+num2+".png";//주사위2개
+		
+	/* 	for(i=1; i>4; i++) {
+		num1+=num1
+		} */
+	}
+	
+	function input() {
+		var obj=document.frm;
+		
+		var x=obj.player1.value;
+		var y=obj.player2.value;
+		
+		
+		 if(x == "" || y == "") {
+			alert("사용자를 입력해주세요.")
+		}else {
+			document.getElementById("p1Name").innerHTML=x;
+			document.getElementById("p2Name").innerHTML=y;
+			//입력값넣기!!
+		}  
+		 
+	
+	}
+	//구현하기! 
+	//참여설정클릭 사용자1과2의 공백 체크한 후 값이 없다면 alert로("사용자를입력해주세요")을 보여주고
+	// 있다면 id가 p1Name, p2Name span에 들어간다.
+	//던지기누르기전 라디오선택되어야함
+	//게이머의 라디오버튼이 클릭되고 던지기가 눌려지면(두개 눌려졌으면 하나만누르세요) 주사위가 변경되고 합산값이 저장된다.
+	//규칙: 3회로 게임을 종료한다.
+	//		 주사위를 두 번 연속 던질 수 없다.	
+	//		 시작은 1번부터.
+	//		 판정밑 버튼 초기화가 눌려지면 최초 상태로 돌아감.
+	//		 게임이 종료되면 '판정'에 'xxx님이 승리하셨습니다.'
+	//	     (변수중요!!쉽게가능)
+</script>
+</head>
+<body>
+	<div id="diceWrap">
+		<form name="frm">
+	<div id="inputHeader">
+	<h2>주사위 게임</h2>
+		<div>
+			<label>사용자1</label>
+			<input type="text" name="player1" class="inputBox">		
+			<label>사용자2</label>
+			<input type="text" name="player2" class="inputBox">		
+			<input type="button" value="참여설정" class="btn"  id="btn1" onclick="input()">	
+		</div>
+		<div style="text-align: center; margin-top: 10px">
+			<input type="radio" name="turn1" id="radio1"><span id="p1Name" ></span>
+			<input type="radio" name="turn2" id="radio2"><span id="p2Name" ></span>
+			<input type="button" value="던지기" class="btn" id="btn2" >	
+			
+		</div>
+	</div>
+	<div id="score">
+		판정 : <span id="result"><br/>
+		<input type="button" value="초기화" class="btn" onclick="reset()" id="btn2" ></span>
+		
+	</div>
+	<div id="diceView">
+		<img alt="" src="images/dice_1.png" name="dice1">
+		<img alt="" src="images/dice_1.png" name="dice2">
+	</div>
+		</form>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

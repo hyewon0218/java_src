@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+function pageMove(sel) {
+	//alert(sel.value)
+	if(sel.selectedIndex !=0) {//선택한 옵션이 처음 옵션이 아닐 때만 동작
+		if(confirm(sel.value+"사이트로 이동하시겠습니까?")) {
+			//location.href="http://"+sel.value;//GET 방식으로 이동 - 뒤로가기 가능
+			location.replace("http://"+sel.value);//GET 방식으로 이동 - 뒤로가기 불가능
+		}
+	}
+}//pageMove
+
+function office( off_name, url) {
+	if(confirm(off_name+"사이트로 이동하시겠습니까?")) {
+		location.href=url;
+	}//end if
+}//office
+</script>
+</head>
+<body>
+<!--this : 이벤트를 발생시킨 특정 HTML Form Control 태그  -->
+<!-- <input type="text" onkeyup="alert(this.value)"/>
+<input type="button" value="클릭" onclick="alert(this.value)"/>
+<input type="radio" value="선택" onclick="alert(this.value)"/>선택<br/> -->
+<select onchange="pageMove( this )"><!--this=select :이벤트를 발생시킨 자신 on:script영역 -->
+	<option>---자주 가는 사이트---</option>
+	<option value="daum.net">다음</option>
+	<option value="naver.net">네이버</option>
+	<option value="google.com">구글</option>
+	<option value="drive.google.com">구글드라이버</option>
+	<option value="rgo4.com">알고사</option>
+	<option value="nate.com">네이트</option>
+</select>
+<div>
+<!-- 이미지를 자르지 않고 특정 좌표에 링크를 설정하는 경우 사용하는 tag -->
+<map id="seoulMap" name="seoulMap">
+	<!-- 
+	<area shape="rect" coords="289,262,332,281"  title="강남구청" alt="강남구청" target="_new" href="http://www.gangnam.go.kr/main.do">
+	<area shape="rect" coords="149,236,189,250"  title="영등포구청" alt="영등포구청" target="_new"  href="http://www.ydp.go.kr/main/main.do">
+	<area shape="rect" coords="329,80,358,94"  title="노원구청" alt="노원구청" target="_new"  href="http://www.nowon.kr/">
+	<area shape="rect" coords="87,274,114,287"  title="구로구청" alt="구로구청" target="_new"  href="http://www.guro.go.kr/www/NR_index.do">
+	 -->
+	<area shape="rect" coords="289,262,332,281"  title="강남구청" alt="강남구청" onclick="office('강남구청','http://www.gangnam.go.kr/main.do')"><!--href: html영역(script x) onclick으로  -->
+																										<!-- 속성값의 영역 변경->	html영역에서 javascript영역으로 변경할 때에는 javascript:을 붙여준다 --> 			
+	<area shape="rect" coords="149,236,189,250"  title="영등포구청" alt="영등포구청" href="javascript:office('영등포구청','http://www.ydp.go.kr/main/main.do')">
+	<area shape="rect" coords="329,80,358,94"  title="노원구청" alt="노원구청" onclick=" office('노원구청','http://www.nowon.kr')">
+	<area shape="rect" coords="87,274,114,287"  title="구로구청" alt="구로구청"  href="javascript:office('구로구청','http://www.guro.go.kr/www/NR_index.do')">
+</map>
+<img src="images/map.gif" usemap="#seoulMap"/>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+/* 유효성검증!!!!!!!!!!!!! */
+</style>
+<script type="text/javascript">
+window.onload=function () {//=autofocus속성
+	var obj=document.loginFrm;
+	obj.id.focus();/* name이 id */
+}
+//아이디와 비밀번호
+	//아이디에서 엔터가 눌려지면 아이디가 입력되었는지 확인하고 입력되었으면(!(==")) 커서를 비밀번호로 이동시킨다.
+	//비밀번호에서 엔터가 눌려지면 아이디가 입력되었는지 확인하고 입력되었으면 비밀번호가 입력되었는지 확인하고 
+		//비밀번호가 입력되어있지 않으면 커서를 비밀번호로 이동시킨다.
+	//아이디와 비밀번호 어디든 엔터가 쳐지고 값이 들어있다면 alert("로그인")출력
+function chkNull() {
+	var obj=document.loginFrm;
+	//alert("눌린 키의 코드 값 : "+window.event.keyCode+" / "+window.event.which+" "+obj.id.value);//enter=13
+	
+		if(window.event.keyCode==13) {
+			if(obj.id.value.trim()=="") {
+			obj.id.value="";
+			obj.id.focus();
+			return;
+		}	
+		if(obj.pwd.value.trim()=="") {
+			obj.pwd.value="";
+			obj.pwd.focus();
+			return;
+		}
+		alert("로그인성공");
+			
+		}
+/* 	if(window.event.keyCode==13) {//비밀번호입력후엔터누르면올라감
+		obj.id.focus();
+	} */
+}
+
+function valid() {
+	var obj=document.emailFrm;
+	var divNode=document.getElementById("resultDiv");
+	var output="";
+	
+/* 	if(obj.email.) */
+	if(obj.email.value.length>5&&obj.email.value.contains("@")&&obj.email.value.contains(".")) {
+		output+="유효한 메일"
+	}else {
+		output+="잘못된 메일형식"
+	}
+		divNode.innerHTML=resultDiv;
+}
+</script>
+</head>
+<body>
+<div id="loginBox"></div>
+<form name="loginFrm">
+<table>
+	<tr>
+		<td>
+			<!-- <input type="text" name="id" id="id" tabindex="1" placeholder="아이디" title="아이디" autofocus="autofocus" class="inputBox"> -->
+			<input type="text" name="id" id="id" tabindex="1" placeholder="아이디" title="아이디"  class="inputBox" onkeydown="chkNull()">
+		</td>
+		<td rowspan="2">
+			<input type="button" value="로그인" class="inputBox"  tabindex="3" style="width: 50px; height: 50px;">		
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="password" name="pwd" id="pwd" tabindex="2" placeholder="비밀번호" title="비밀번호" class="inputBox" onkeydown="chkNull()">
+		</td>
+	</tr>
+</table>
+</form>
+<div>
+<form name="emailFrm">
+<!--유효성 검증버튼을 누르면 입력된 이메일이 5자 이상이면서 @과 .이 존재하는지 둘다 있으면& 입력한 메일과 "유효한 메일"메세지를
+	resultDiv에 출력하고, 그렇지 않으면 "잘못된 메일형식"을 글자색이 #FF0000으로 resultDiv출력 -->
+	<label>이메일</label>
+	<input type="text" name="email" class="inputBox" id="email"/>
+	<input type="button" value="유효성검증" class="btn" onclick="vaild()"/>
+</form>
+ 	<div id="resultDiv"></div>
+</div>
+</body>
+</html>

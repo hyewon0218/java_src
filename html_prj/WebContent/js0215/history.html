@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+	
+</style>
+<script type="text/javascript">
+	function historyCnt() {
+		alert(history.length);
+	}
+	function hisrotyBack() {
+		history.back();
+		//history.go(-1);//뒤로한칸
+	}
+	function historyGo() {
+		history.go(1);
+		
+	}
+
+
+
+
+</script>
+</head>
+<body>
+	<input type="button" value="히스토리의 수" onclick="historyCnt()"/>
+	<input type="button" value="뒤로" onclick="hisrotyBack()"/>
+	<input type="button" value="앞으로" onclick="historyGo()"/>
+</body>
+</html>

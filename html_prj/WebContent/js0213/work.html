@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+/*안나옴!!!!!!!!!!!!!!!!  */
+</style>
+<script type="text/javascript">
+	function viewCase(flag) {
+		var divNode=document.getElementById("resultDiv");
+		var output="";
+		var data=document.frm.text.value;
+		var caseText="";
+		
+		if(flag=="lc") {
+		console.log
+			output+="소문자 : "+data.replace(/[A-Z0-9]/g,"");
+		}
+		if(flag=="uc") {
+			output+="대문자 : "+data.replace(/[a-z0-9]/g,"");
+			
+		}
+		if(flag=="nc") {
+			output+="숫자 : "+data.replace(/[A-Za-z]/g,"");
+			
+		}
+
+		divNode.innerHTML=output;
+	}
+/* 	}
+	function toLowerCase() {
+		var obj=document.frm;
+		var divNode=document.getElementById("output");
+		var output="";
+		
+		var msg="ABCDabcd123";
+		
+		divNode.innerHTML=output;
+	}
+	function math() {
+		var obj=document.frm;
+		var divNode=document.getElementById("output");
+		var output="";
+		
+		var msg="ABCDabcd123";
+		output+="숫자 : "+msg.parseInt+"<br/>"
+		
+		divNode.innerHTML=output;
+	} */
+</script>
+</head>
+<body>
+<div id="frm"></div>
+<form name="frm">
+<table>
+	<tr>
+		<td>
+			<input type="text" name="text" class="inputBox" value="abcABC123" id="text" >
+		</td>
+		<td>
+			<input type="button" value="소문자"  class="btn" onclick="viewCase('lc')">
+		</td>
+		<td>
+			<input type="button" value="대문자" class="btn" onclick="viewCase('uc')">
+		</td>
+		<td>
+			<input type="button" value="숫자" class="btn" onclick="viewCase('nc')"> 
+		</td>
+	</tr>
+	<!-- <tr>
+		<td colspan="4" >
+		<input type="text" name="output" class="inputBox" id="output1" style="width: 400px; height: 300px;">
+		</td>
+	</tr> -->
+</table>
+</form>
+<div id="resultDiv"></div> 
+</body>
+</html>

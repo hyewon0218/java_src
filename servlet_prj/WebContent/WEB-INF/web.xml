@@ -69,4 +69,52 @@
     <servlet-name>parameter_values</servlet-name>
     <url-pattern>/parameter_values</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>test_redirect</servlet-name>
+    <servlet-class>day0228.TestRedirect</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>test_redirect</servlet-name>
+    <url-pattern>/test_redirect</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>forward_a</display-name>
+    <servlet-name>forward_a</servlet-name>
+    <servlet-class>day0228.ForwardA</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>forward_a</servlet-name>
+    <url-pattern>/forward_a</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>forward_b</display-name>
+    <servlet-name>forward_b</servlet-name>
+    <servlet-class>day0228.ForwardB</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>forward_b</servlet-name>
+    <url-pattern>/forward_b</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>why_session_b</display-name>
+    <servlet-name>why_session_b</servlet-name>
+    <servlet-class>day0228.WhySessionB</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>why_session_b</servlet-name>
+    <url-pattern>/why_session_b</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>why_session_c</display-name>
+    <servlet-name>why_session_c</servlet-name>
+    <servlet-class>day0228.WhySessionC</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>why_session_c</servlet-name>
+    <url-pattern>/why_session_c</url-pattern>
+  </servlet-mapping>
 </web-app>

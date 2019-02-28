@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+	#wrap{width: 1000px; height: 600px; margin: 0px auto}
+	#getValue{width: 498px; height: 598px; border: 1px solid #333; float: left;}
+	#setValue{width: 498px; height: 598px; border: 1px solid #333; float: right;}
+</style>
+<!--CDN을 사용하여 jQuery를 다운로드 받아 사용  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		//이름이 유일한 HTML Form Control 얻기
+		$("#btn").click(function() {
+			var output="<ul>";
+			//text 값 얻기
+			output+="<li>text : "+$("#text").val()+"</li>";
+			//password 값 얻기
+			output+="<li>password : "+$("#pass").val()+"</li>";
+			//hidden
+			output+="<li>hidden: "+$("#hid").val()+"</li>";
+			//checkbox : value가 없으면 on이 나온다.
+			output+="<li>checkbox: "+$("#flag").val()+"</li>";
+			//date
+			output+="<li>date(HTML5): "+$("#date").val()+"</li>";
+			//select
+			output+="<li>select: "+$("#loc").val()+"</li>";
+			//file : 경로는 가상의 경로명이 나온다.
+			output+="<li>file: "+$("#file").val()+"</li>";
+			//textarea
+			output+="<li>textarea: "+$("#ta").val()+"</li>";
+			
+			
+			$("#value").html(output);
+			
+			if(confirm("전송하시겠습니까?")) {
+				//document.frm.submit();
+				$("#frm").submit();/* jquery에서 제공하는 함수 */	
+			}
+		});//click
+		
+		$("#btnSet").click(function() {
+			//text 값설정
+			$("#text1").val("김정윤");
+			//password 값설정 : *로 보여준다.
+			$("#pass1").val("123456");
+			//hidden 값설정
+			$("#hid1").val("히든태그의 값");
+			//date 값설정 : yyyy-mm-dd의 형식을 가진
+			$("#date1").val("2019-05-15");
+			//file 값설정 : file은 값설정이 되지 않는다.
+			//$("#file1").val("c:/dev/env.bat");
+			//textarea 값설정
+			var msg="널 향한 설레임은\n 오늘부터 우리는\n 꿈꾸며 기도하는 오늘부터 우리는\n널 향한 설레임은\n 오늘부터 우리는\n 꿈꾸며 기도하는 오늘부터 우리는";
+			$("#ta1").val(msg);
+			
+			
+		});//click
+		
+	});//ready
+</script>
+</head>
+<body>
+<div id="wrap">
+<div id="getValue">
+<strong>값 얻기</strong>
+<form name="frm" id="frm" action="test.jsp"><!--jsp는 name이 중요하다  -->
+<label>text</label>
+	<input type="text" name="text"  class="inputBox" value="오늘부터 우리는" id="text"/>
+	<br/>
+<label>password</label>
+	<input type="password" name="pass"  class="inputBox" value="여자친구" id="pass"/>
+	<br/>
+<label>hidden</label>
+	<input type="hidden" name="hid"  value="2019-02-22" id="hid"/><!--안보이니 class필요없다  -->
+	<br/>
+<label>checkbox</label><!-- value가 없는 checkbox가 선택되면 "on"이 넘어간다. -->
+	<input type="checkbox" name="flag"  id="flag"/>로그인유지
+	<br/>
+<label>날짜선택</label><!-- html5에서 지원되는 control-->
+	<input type="date" name="date"  id="date"/>
+	<br/>
+<label>지역선택</label>
+	<select name="loc" id="loc">
+		<option value="서울">서울</option>
+		<option value="경기">경기</option>
+		<option value="강원">강원</option>
+		<option value="충청">충청</option>
+	</select>
+	<br/>
+<label>파일선택</label>
+	<input type="file" name="file" id="file" class="inputBox" />
+	<br/>	
+<label>ta</label>
+	<textarea class="inputBox" name="ta" id="ta" style="width: 300px; height: 100px;">소원,은하,엄지,유주,신비,예린</textarea><!--textarea 태그사이에값넣는다 엔터치면 공백생김-->
+	<br/>	
+<input type="button" value="값얻기" class="btn" id="btn">	
+<input type="reset" value="초기화" class="btn" id="reset">	
+</form>
+<div id="value"></div>
+</div>
+<div id="setValue">
+<strong>값 설정</strong>
+<form name="frm1" id="frm1" ><!--jsp는 name이 중요하다/jquery는 id중요  -->
+<label>text</label>
+	<input type="text" name="text"  class="inputBox" id="text1"/>
+	<br/>
+<label>password</label>
+	<input type="password" name="pass"  class="inputBox" id="pass1"/>
+	<br/>
+<label>hidden</label>
+	<input type="hidden" name="hid"  id="hid1"/><!--안보이니 class필요없다  -->
+	<br/>
+<label>날짜선택</label><!-- html5에서 지원되는 control-->
+	<input type="date" name="date"  id="date1"/>
+	<br/>
+<label>파일선택</label>
+	<input type="file" name="file" id="file1" class="inputBox" />
+	<br/>	
+<label>ta</label>
+	<textarea class="inputBox" name="ta" id="ta1" style="width: 300px; height: 100px;"></textarea><!--textarea 태그사이에값넣는다 엔터치면 공백생김-->
+	<br/>	
+<input type="button" value="값설정" class="btn" id="btnSet">	
+<input type="reset" value="초기화" class="btn" >	
+</form>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+	#output{width: 500px; height: 300px; border: 1px solid #dfdfdf }
+</style>
+<script type="text/javascript">
+	window.onload=function() {
+		document.getElementById("btn1").addEventListener("click",useNonParam); 
+		document.getElementById("btn2").addEventListener("click",useParam); 
+	}
+	
+	//매개변수 없는 무기명함수
+	function useNonParam() {
+		
+		var val=function() {/*함수가 변수에 할당됨  */
+			var name="김정윤";
+			function getAddr() {
+				return "서울시 강남구 역삼동";
+			}
+		
+			//closure : 함수 내의 변수나 함수를 외부에서 사용할 수 있도록 접근권한을 변경
+			//{외부명: 내부명}
+			return{ na:name, addr:getAddr }//json의문법과같다.함수의이름만!
+		}();/*();-함수를만들면서호출 */
+		
+		var divNode=document.getElementById("output");
+		divNode.innerHTML="이름 : "+val.na+", 주소 : "+val.addr();
+		//alert(val.name);//무기명 함수 안에 있는 변수는 외부에서 사용할 수 없다.(자바의 private)
+		//alert(val.addr())
+	}//useNonParam
+	
+	//매개변수 있는 무기명함수	
+	function useParam() {
+		
+		var name=document.getElementById("name").value;
+		var addr=document.getElementById("addr").value;
+		var age=document.getElementById("age").value;
+		
+		
+		
+		var personData=function(i_name, i_addr, i_age) {
+			function getName() {
+				return i_name+"님";
+			}//getName
+			
+			function getAddr() {
+				return "거주지 :"+i_addr;
+			}//getAddr
+
+			function birth() {
+				var date=new Date();
+				return date.getFullYear()-i_age+1;
+			}//birth
+			
+			//closure
+			return {getName:getName, addr:getAddr,bir:birth }
+		}(name,addr,age);
+		
+		document.getElementById("output").innerHTML="이름 : "+personData.getName()+",주소 : "+personData.addr()+",태어난 해 : "+personData.bir();
+	}//useParam
+</script>
+</head>
+<body>
+<div id="output" ></div>
+<div>
+	이름 : <input type="text" name="name" id="name"><br/>
+	주소 : <input type="text" name="addr" id="addr"><br/>	
+	나이 : <input type="text" name="age" id="age"><br/>
+	<input type="button" value="매개변수 있는 무기명함수"  id="btn2" class="btn"/>
+</div>
+	<input type="button" value="매개변수 없는 무기명함수" id="btn1" class="btn"/>
+</body>
+</html>

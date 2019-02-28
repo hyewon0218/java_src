@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/css/main_v20190130.css">
+<style type="text/css">
+
+</style>
+<!--CDN을 사용하여 jQuery를 다운로드 받아 사용  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		$("#btn").click(function() {
+			//체크박스 중 선택된 체크박스의 값을 얻는다.
+			//alert($("input:eq(0)").is(":checked"))
+			var checkArr=$("[name='movie']");//이름이 같은 Control들은 배열로 나온다.
+			var data="[{'movie':'해리포터','synopsis':'해리포터가 비밀의 방에 들어가기 위해 비밀번호를 찾아 나가는데...'},"+
+			"{'movie':'사바하','synopsis':'가나다라 마바사바하!!!!!!'},"+
+			"{'movie':'극한직업','synopsis':'마약반 형사가 지금까지 이런 맛은 없었다......새로운 마약을 발견하는 영화'},"+
+			"{'movie':'신데렐라','synopsis':'신데렐라가 유리구두를 잃어버리고 마는데....'}]";
+			
+			var movieJsonArr=eval("("+data+")");//문자열 데이터를 JSONArray로 생성
+			//alert(checkArr.length)
+			var output="<ul>";
+			$.each(checkArr,function(i,checkbox){
+				//alert($(checkbox).is(":checked"));
+				//alert($(this).is(":checked"));
+				
+				var checkMovie="";
+				if($(this).is(":checked")) {
+					checkMovie=$(this).val();//html body에 여러번 접근하지않기위해 변수로 만들어줌.
+					output+="<li>"+checkMovie+"</li>";
+					//선택된 영화의 줄거리를 가지고 있는 JSONArray에서 값 얻기
+					$.each(movieJsonArr,function(i,movieJson) {
+						if(movieJson.movie == checkMovie) {
+							output+="<li>&nbsp;&nbsp;줄거리 : "+movieJson.synopsis+"</li>";
+						}
+					});//each
+				}//end if
+			});//each
+			output+="</ul>";
+			$("#movieView").html(output);
+		});//click
+		
+		$("#btn1").click(function() {
+			// 라디오는 여러개 중 하나만 선택되므로 selector:checked를 사용하면
+			//선택된 값을 얻을 수 있다.
+			//alert($("[name='movie1']:checked").val())
+			/* 배열을 반복시켜 선택된 라디오가 존재한다면 값을 얻는 코드
+			var radioArr=$("[name='movie1']");
+			$.each(radioArr, function(i,radio){
+				if($(this).is(":checked")) {
+					alert($(this).val());
+				}//end if
+			});//each */
+			
+			var img=$("[name='movie1']:checked").val();
+			if(img==undefined) {
+				alert("포스터를 선택해주세요");
+				return;
+			}//end if
+			
+			//<img>태그에 포스터로 속성 설정
+			$("#img").attr("src","images/"+img+".png");
+			
+		});//click
+		
+		$("#flag").click(function() {
+			var flag=$(this).is(":checked");//나의 체크상태 저장
+			var movieArr=$("[name='movie']");
+			$.each(movieArr, function(i,movie){
+				//name="movie"인 체크박스의 체크 상태를 변경하는 속성을 넣는다.
+				//$(movie).attr("checked",flag);//attr : 한번만됨
+				$(movie).prop("checked",flag);
+				
+			});//each
+			
+			
+		});//click
+		
+	});//ready
+</script>
+</head>
+<body>
+<div>
+	<label>감상영화선택</label><br/>
+	<input type="checkbox" name="flag" id="flag">전체선택<br/>
+	<input type="checkbox" name="movie" value="해리포터"/>해리포터와 비밀의방<br/>
+	<input type="checkbox" name="movie" value="사바하"/>사바하<br/>
+	<input type="checkbox" name="movie" value="극한직업"/>극한직업<br/>
+	<input type="checkbox" name="movie" value="신데렐라"/>신데렐라<br/>
+	<input type="button" value="선택한 값얻기" class="btn"  id="btn" />
+	<div id="movieView" style="height: 250px;"></div>
+	
+	<input type="radio" name="movie1" value="harry"/>해리포터와 비밀의방<br/>
+	<input type="radio" name="movie1" value="sabaha"/>사바하<br/>
+	<input type="radio" name="movie1" value="extreme"/>극한직업<br/>
+	<input type="radio" name="movie1" value="cinderella"/>신데렐라<br/>
+	<input type="button" value="포스터보기" class="btn"  id="btn1" />
+	<div>
+	 	<img id="img" />
+	</div>
+</div>
+</body>
+</html>

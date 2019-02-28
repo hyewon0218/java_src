@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+
+</style>
+<!--CDN을 사용하여 jQuery를 다운로드 받아 사용  -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+<!--다운로드 받은 js를 사용  -->
+<script type="text/javascript" src="../common/js/jquery2.2.4.min.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+	//$(document).ready(function() {
+	//$(window).load(function() {
+ 	//$("div").css("background-color", "#FF0000")
+ 	//ID selector : #ID명
+ 	//$("#a").css("background-color", "#FF0000");
+ 	//Class selector :.클래스명
+ 	//$(".b").css("background-color", "#FF0000");
+ 	
+ 	//tag selector ( single ) : 태그명 
+ 	//$("div").css("background-color", "#FF0000");
+ 	
+ 	//tag selector ( multiple ) : 태그명 
+ 	//$("div,span,a").css("background-color", "#FF0000");
+
+ 	//sub selector ( multiple ) : 태그명>태그명 
+ 	//$("div>p>span").css("background-color", "#FF0000");
+
+ 	//가장 처음 태그만 : 태그명:first,
+ 	//$("li:first").css("background-color", "#FF0000");
+ 	
+ 	//가장 마지막 태그만 : 태그명:last,
+ 	//$("li:last").css("background-color", "#FF0000");
+
+ 	//홀수번째 태그만 : 태그명:odd,
+ 	//$("li:odd").css("background-color", "#FF0000");
+
+ 	//짝수번째 태그만 : 태그명:even,
+ 	//$("li:even").css("background-color", "#FF0000");
+ 	
+ 	//특정 인덱스번째 : 태그명:eq(인덱스)
+ 	//$("li:eq(2)").css("background-color", "#FF0000");
+ 	
+ 	//attribute selector : [속성명='값']
+ 	//$("[type='text']").css("background-color", "#FF0000");
+ 	//$("[name='name']").css("background-color", "#FF0000");
+ 	//$("[value='이름']").css("background-color", "#FF0000");
+ 	//$("[id='name']").css("background-color", "#FF0000");
+ 	//$("[class='name']").css("background-color", "#FF0000");
+ 	//태그명 붙=안붙
+ 	//$("[target='b']").css("background-color", "#FF0000");
+ 	//$("a[target='b']").css("background-color", "#FF0000");
+ 	
+ 	//table 홀수행 배경색 넣기
+ 	$("tr:eq(0),tr:eq(2)").css("background-color", "#FF0000");
+ 	//table 1,4,9 배경색 넣기
+ 	$("td:eq(0),td:eq(3),td:eq(8)").css("background-color", "#FF0000");
+ 	
+ 	//특정 태그의 class를 식별하여 적용
+ 	//p의 class가 c인 태그에만 적용 : 태그명. class명
+ 	$("p.c").css("background-color", "#FF0000");
+ 	
+});
+</script>
+</head>
+<body>
+<strong>selector의 사용</strong>
+<div id="a">id가 a인 DIV</div>
+<p class="b">처음 P</p>
+<p class="c">class가 c인 두번째 P</p>
+<div class="c">class가 c인 DIV</div>
+<div class="b">
+	<p>DIV 안 P<span>DIV &gt; P &gt; SPAN</span></p>
+</div>
+<span>SPAN</span>
+<p>세번째 P</p>
+<ol>
+	<li>사과</li>
+	<li>배</li>
+	<li>포도</li>
+	<li>딸기</li>
+</ol>
+<ul>
+	<li>서울</li>
+	<li>경기</li>
+	<li>충청</li>
+	<li>경상</li>
+	<li>전라</li>
+	<li>제주</li>
+</ul>
+<a href="#void" target="a">링크1</a><br/>
+<a href="#void" target="b">링크1</a><br/>
+<a href="#void" target="c">링크1</a><br/>
+<input type="text" name="name" value="이름" id="name" class="name"><br/>
+
+<table border="1">
+  <tr>
+    <td width="50" >1</td>
+    <td width="50">2</td>
+    <td width="50">3</td>
+  </tr>
+  <tr>
+    <td >4</td>
+    <td>5</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+  </tr>
+</table>
+
+
+</body>
+</html>

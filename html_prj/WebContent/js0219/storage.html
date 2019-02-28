@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/html_prj/common/main_v20190130.css">
+<style type="text/css">
+	#output{height:  80px; width: 500px; border: 1px solid #333; }
+</style>
+<script type="text/javascript">
+	window.onload=function() {
+		document.getElementById("s_set").addEventListener("click",sSet);
+		document.getElementById("s_get").addEventListener("click",sGet);
+		document.getElementById("s_remove").addEventListener("click",sRemove);
+		document.getElementById("l_set").addEventListener("click",lSet);
+		document.getElementById("l_get").addEventListener("click",lGet);
+		document.getElementById("l_remove").addEventListener("click",lRemove);
+	}
+	function sSet() {
+		//세션스토리지에 값 설정
+		window.sessionStorage.setItem("name", "노진경");//문자열
+		window.sessionStorage.setItem("age", 20);//숫자(number)
+		window.sessionStorage.setItem("flag", true);//불린 
+	}
+	function lSet() {
+		//세션스토리지에 값 설정
+		window.localStorage.setItem("name", "김희철");//문자열
+		window.localStorage.setItem("age", 25);//숫자(number)
+		window.localStorage.setItem("flag", true);//불린 
+		window.localStorage.setItem("addr", "서울시 동작동");//불린 
+	}
+	
+	function sGet() {
+		var divNode=document.getElementById("output");
+		var output="<ul>";
+		//세션스토리지에 값을 얻어와서 div에 출력
+		var ses=window.sessionStorage;
+		var name=ses.getItem("name");
+		var age=ses.getItem("age");
+		var flag=ses.getItem("flag");
+		
+		output+="<li>이름 : "+name+"</li>";
+		output+="<li>나이 : "+age+"</li>";
+		output+="<li>flag : "+flag+"</li>";
+		
+		divNode.innerHTML=output;
+	}
+	function lGet() {
+		var divNode=document.getElementById("output");
+		var output="<ul>";
+		//로컬스토리지에 값을 얻어와서 div에 출력
+		var ses=window.localStorage;
+		var name=ses.getItem("name");
+		var age=ses.getItem("age");
+		var flag=ses.getItem("flag");
+		var addr=ses.getItem("addr");
+		
+		output+="<li>이름 : "+name+"</li>";
+		output+="<li>나이 : "+age+"</li>";
+		output+="<li>flag : "+flag+"</li>";
+		output+="<li>주소 : "+addr+"</li>";
+		
+		divNode.innerHTML=output;
+	}
+	
+	function sRemove() {
+		//세션스토리지의 값 삭제
+		//sessionStorage.removeItem("name");
+		//sessionStorage.removeItem("age");
+		//sessionStorage.removeItem("flag");
+		sessionStorage.clear();
+	}
+	function lRemove() {
+		//로컬스토리지의 값 삭제
+		localStorage.removeItem("name");
+		localStorage.removeItem("age");
+		localStorage.removeItem("flag");
+		localStorage.removeItem("addr");
+		
+	}
+	
+</script>
+</head>
+<body>
+<div id="output"></div>
+<div>
+
+	<input type="button" value="SessionStrorage값설정" class="btn" id="s_set"/>
+	<input type="button" value="SessionStrorage값얻기" class="btn" id="s_get"/>
+	<input type="button" value="SessionStrorage값삭제" class="btn" id="s_remove"/>
+	
+	<input type="button" value="LocalStrorage값설정" class="btn" id="l_set"/>
+	<input type="button" value="LocalStrorage값얻기" class="btn" id="l_get"/>
+	<input type="button" value="LocalStrorage값삭제" class="btn" id="l_remove"/>
+</div>
+</body>
+</html>

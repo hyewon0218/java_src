@@ -151,13 +151,9 @@
 
       <Context docBase="html_prj" path="/html_prj" reloadable="true" source="org.eclipse.jst.jee.server:html_prj"/>
       <Context docBase="servlet_prj" path="/servlet_prj" reloadable="true" source="org.eclipse.jst.jee.server:servlet_prj">
-      <Resource name="jdbc/dbcp" auth="Container"
-              type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
-              url="jdbc:oracle:thin:@127.0.0.1:1521:orcl"
-              username="scott" password="tiger" maxTotal="20" maxIdle="10"
-              maxWaitMillis="-1"/>
+      <Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" maxIdle="10" maxTotal="20" maxWaitMillis="-1" name="jdbc/dbcp" password="tiger" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" username="scott"/>
       </Context>
-      </Host>
+      <Context docBase="jsp_prj" path="/jsp_prj" reloadable="true" source="org.eclipse.jst.jee.server:jsp_prj"/></Host>
     </Engine>
   </Service>
 </Server>

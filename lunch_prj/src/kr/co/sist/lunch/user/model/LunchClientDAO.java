@@ -197,7 +197,7 @@ public class LunchClientDAO {
 			
 			while(rs.next()) {
 				olvo=new OrderListVO(rs.getString("lunch_name"), 
-						rs.getString("order_date"),rs.getString("ask"), rs.getInt("quan"));
+						rs.getString("order_date"), rs.getInt("quan"));
 				list.add(olvo);
 			}//end while
 		}finally {

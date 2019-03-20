@@ -48,7 +48,7 @@
    			<li>${i}.${movie }</li><!--var의 movie  -->
    		</c:forEach>
    	</ul>	
-   		
+   		<!--2019 03 15 추가  -->
    	<%
 	//List의 값 출력
 	/* List */

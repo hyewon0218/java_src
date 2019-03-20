@@ -1,0 +1,1 @@
+http://211.63.89.130:8080/servlet_prj/web_member/member_join.html

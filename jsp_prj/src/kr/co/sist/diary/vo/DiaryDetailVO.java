@@ -1,4 +1,4 @@
-package kr.sist.diary.vo;
+package kr.co.sist.diary.vo;
 
 public class DiaryDetailVO {
 	private String writer, subject, contents, w_date, ip;

@@ -2,6 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,12 +38,37 @@
 #writeFrm{background-color: #FFFFFF; border: 1px solid #dfdfdf; box-shadow: 5px 5px 5px#444444; padding: 10px; }
 /* 달력설정 끝 */
 </style>
- <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ <!--summernote 관련 library 시작  -->
+
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="../common/summernote/bootstrap.css" rel="stylesheet">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="../common/summernote/bootstrap.js"></script> 
+
+<!-- include summernote css/js -->
+<link href="../common/summernote/summernote-lite.css" rel="stylesheet">
+<script src="../common/summernote/summernote-lite.min.js"></script>
+<script src="../common/summernote/lang/summernote-ko-KR.js"></script>
+<script type="text/javascript">
+$(function() {
+	  $('#summernote').summernote({
+		  	placeholder: '이벤트를 작성해주세요.',
+	        tabsize: 2,
+	        height: 150,
+	        width: 390,
+	        lang: 'ko-KR'
+	  });
+	});
+</script>
+
+<!--summernote 관련 library 끝  -->
+<!-- Tooltip 시작 -->
+
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="../common/js/jquery-ui.js"></script>
   <script>
   $( function() {
-    $( document ).tooltip({
+    $( document ).tooltip1({
       position: {
         my: "center bottom-20",
         at: "center top",
@@ -101,7 +129,7 @@
     bottom: -20px;
     top: auto;
   }
-  </style> -->
+  </style> 
   <script type="text/javascript">
   
   		function moveMonth(month,year) {
@@ -118,40 +146,47 @@
 		
 	
   </script>
-  <!--summernote 관련 library 시작  -->
-
-<!-- include libraries(jQuery, bootstrap) -->
-<link href="../common/summernote/bootstrap.css" rel="stylesheet">
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="../common/summernote/bootstrap.js"></script> 
-
-<!-- include summernote css/js -->
-<link href="../common/summernote/summernote-lite.css" rel="stylesheet">
-<script src="../common/summernote/summernote-lite.min.js"></script>
-<script src="../common/summernote/lang/summernote-ko-KR.js"></script>
-<script type="text/javascript">
-$(function() {
-	  $('#summernote').summernote({
-		  	placeholder: '이벤트를 작성해주세요.',
-	        tabsize: 2,
-	        height: 150,
-	        width: 390,
-	        lang: 'ko-KR'
-	  });
-	});
-</script>
-
-<!--summernote 관련 library 끝  -->
+ 
 <script type="text/javascript">
 
 $(function name() {
 	$("#btnCloseFrm").click(function() {
-		location.href="diary.jsp";
+		//location.href="diary.jsp?param_year=${param.param_year}&param_month=${param.param_month}";
+		//닫혀질때도년과월을줘야 
+		moveMonth("${param.param_month}","${param.param_year}")
 	});//click
 });//ready
-
+$(function name() {
+	$("#btnCloseFrm").click(function() {
+		moveMonth("${param.param_month}","${param.param_year}")
+	});//click
+	
+	//글작성 처리
+	$("#btnWrite").click(function() {
+		if($("#subject").val()=="") {
+			alert("이벤트제목은 필수입력입니다.");
+			$("#subject").focus();
+			return;
+		}
+		if($("#summernote").val()=="") {
+			alert("이벤트내용은 필수입력입니다.");
+			$("#summernote").focus();
+			return;
+		}
+		if($("#writer").val()=="") {
+			alert("작성자는 필수입력입니다.");
+			$("#writer").focus();
+			return;
+		}
+		if($("#pass").val()=="") {
+			alert("비밀번호는 필수입력입니다.");
+			$("#pass").focus();
+			return;
+		}
+		$("[name='writeFrm']").submit();
+	});//click
+});//ready
 </script>
-
 </head>
 <body>
 <div id="wrap">
@@ -313,8 +348,9 @@ $(function name() {
 	   		<c:import url="${param.pageFlag }.jsp"/>
 	   		</c:if>
 	   </div>
+	   
    </div>
-   </div><!--어디까지?  -->
+   </div>
    
    </div>
    <div id="footer">

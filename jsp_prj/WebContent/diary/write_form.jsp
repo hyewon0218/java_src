@@ -2,7 +2,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+ <%//insert가 되기 전.
+ 	session.setAttribute("writeFlag", false);
+ %>
  <div id="writeFrm">
+ <form action="diary.jsp" method="post" name="writeFrm" >
+ <input type="hidden" name="pageFlag" value="write_process">
+ <!--글쓰기후그월에멈춰있게하기위해서  -->
+ <input type="hidden" name="param_year" value="${param.param_year }">
+ <input type="hidden" name="param_month" value="${param.param_month }">
  <table id="writeTab">
  	<tr>
  		<th colspan="2" style="text-align: center">
@@ -14,7 +22,7 @@
  	</tr>
  	<tr>
  		<td style="width: 80px;">제목</td>
- 		<td style="width: 400px;"><input type="text" name="subject" class="inputBox" style="width: 350px;"></td>
+ 		<td style="width: 400px;"><input type="text" name="subject" class="inputBox" style="width: 350px;"id="subject"></td>
  	</tr>
  	<tr>
  		<td style="width: 80px;">내용</td>
@@ -30,11 +38,11 @@
  	</tr>
  	<tr>
  		<td style="width: 80px;">작성자</td>
- 		<td style="width: 400px;"><input type="text" name="writer" class="inputBox" style="width: 120px;"></td>
+ 		<td style="width: 400px;"><input type="text" name="writer" class="inputBox" style="width: 120px;" id="writer"></td>
  	</tr>
  	<tr>
  		<td style="width: 80px;">비밀번호</td>
- 		<td style="width: 400px;"><input type="password" name="pass" class="inputBox" style="width: 200px;"></td>
+ 		<td style="width: 400px;"><input type="password" name="pass" class="inputBox" style="width: 200px;" id="pass"></td>
  	</tr>
  	<tr>
  		<td style="width: 80px;">작성일</td>
@@ -56,4 +64,5 @@
  	</tr>
  	
  </table>   
+ </form>
  </div>

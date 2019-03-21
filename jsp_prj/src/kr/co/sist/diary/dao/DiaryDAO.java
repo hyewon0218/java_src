@@ -1,16 +1,23 @@
-package kr.sist.diary.dao;
+package kr.co.sist.diary.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.sist.diary.vo.DiaryDetailVO;
-import kr.sist.diary.vo.DiaryListVO;
-import kr.sist.diary.vo.DiaryRemoveVO;
-import kr.sist.diary.vo.DiaryUpdateVO;
-import kr.sist.diary.vo.DiaryVO;
-import kr.sist.diary.vo.MonthVO;
-import kr.sist.diary.vo.SearchDataVO;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import kr.co.sist.diary.vo.DiaryDetailVO;
+import kr.co.sist.diary.vo.DiaryListVO;
+import kr.co.sist.diary.vo.DiaryRemoveVO;
+import kr.co.sist.diary.vo.DiaryUpdateVO;
+import kr.co.sist.diary.vo.DiaryVO;
+import kr.co.sist.diary.vo.MonthVO;
+import kr.co.sist.diary.vo.SearchDataVO;
 
 public class DiaryDAO {
 	private static DiaryDAO d_dao;
@@ -25,6 +32,24 @@ public class DiaryDAO {
 		}//end if
 		return d_dao;
 	}//getInstance
+	
+	private Connection getConn()throws SQLException {
+		Connection con=null;
+		
+		
+		try {
+			//1. JNDI 사용객체 생성
+			Context ctx=new InitialContext();
+			//2. DBCP에 저장된 DataSource 얻기
+			DataSource ds=(DataSource)ctx.lookup("java:comp/env/jdbc/jsp_dbcp");
+			//3. Connection 얻기
+			con=ds.getConnection();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		
+		return con;
+	}//getConn
 	
 	/**
 	 * 년, 월을 입력받아 해당 월의 모든 일자의 글번호와 제목을 가변배열에 저장하여 
@@ -46,7 +71,37 @@ public class DiaryDAO {
 	 * @throws SQLException
 	 */
 	public void insertEvent(DiaryVO d_vo)throws SQLException {
+
+		Connection con=null;
+		PreparedStatement pstmt=null;
 		
+		try {
+		//1. 
+		//2.
+		//3.
+			con=getConn();
+		//4.
+			StringBuilder insertEvt=new StringBuilder();
+			insertEvt.append("INSERT INTO DIARY")
+			.append("(NUM,WRITER,SUBJECT,CONTENTS,E_YEAR,E_MONTH,E_DAY,PASS,IP)")
+			.append("values(seq_diary.nextval,?,?,?,?,?,?,?,?)");
+			
+			pstmt=con.prepareStatement(insertEvt.toString());
+			
+			pstmt.setString(1, d_vo.getWriter());	
+			pstmt.setString(2, d_vo.getSubject());	
+			pstmt.setString(3, d_vo.getContents());	
+			pstmt.setString(4, d_vo.getE_year());	
+			pstmt.setString(5, d_vo.getE_month());	
+			pstmt.setString(6, d_vo.getE_day());	
+			pstmt.setString(7, d_vo.getPass());	
+			pstmt.setString(8, d_vo.getIp());	
+		//5.
+			pstmt.executeUpdate();
+		}finally {
+		//6.
+				if(pstmt!=null) {pstmt.close();}
+				if(con!=null) {con.close();}}
 	}//insertEvent
 	
 	/**

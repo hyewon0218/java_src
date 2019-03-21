@@ -1,3 +1,7 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.util.Arrays"%>
+<%@page import="kr.co.sist.diary.vo.MonthVO"%>
+<%@page import="kr.co.sist.diary.dao.DiaryDAO"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -186,6 +190,18 @@ $(function name() {
 		$("[name='writeFrm']").submit();
 	});//click
 });//ready
+function writeEvt(year,month,day,pageFlag,evtCnt) {
+	
+	if(evtCnt>4) {
+		alert("하루에 작성 가능한 이벤트의 수는 5건까지입니다.");
+		return;
+	}
+	$("[name='param_year']").val(year);
+	$("[name='param_month']").val(month);
+	$("[name='param_day']").val(day);
+	$("[name='pageFlag']").val(pageFlag);
+	$("[name='diaryFrm']").submit();
+}
 </script>
 </head>
 <body>
@@ -244,7 +260,8 @@ $(function name() {
    <form method="post" action="diary.jsp" name="diaryFrm"  >
    		<input type="hidden" name="param_month"/>
    		<input type="hidden" name="param_year"/>
-   	
+   		<input type="hidden" name="param_day"/>
+   		<input type="hidden" name="pageFlag"/>
    </form>
    
    <div id="diaryTitle">
@@ -269,6 +286,14 @@ $(function name() {
 	   	<%
 	   	String dayClass="";//요일별 색깔
 	   	String todayCss="";//오늘이거나 평일의 TD색 
+		//요청되는 년, 월의 모든 이벤트를 조회(추가)
+		DiaryDAO d_dao=DiaryDAO.getInstance();
+	   	try{
+	   	MonthVO[][] monthEvtData=d_dao.selectMonthEvent(String.valueOf( nowYear),String.valueOf( nowMonth));
+	   	MonthVO[] dayEvt=null;//해당 일에 글이 존재한다면 저장할 배열
+	   	
+	   	String tempSubject="";//20자 이상인 글을 잘라 ...을 붙이기 위해
+	   	int evtCnt=0;//이벤트 건수를 제한하기 위해 
 	   	
 	   	//매월마다 끝나는 날짜가 다르기 때문에 무한루프를 사용한다.
 	   	 for(int tempDay=1;  ; tempDay++) {
@@ -327,9 +352,31 @@ $(function name() {
 			}//end if
 	   		%>
 	   		<td class="<%=todayCss %>">
+	   			<%
+	   			dayEvt=monthEvtData[tempDay-1];//배열은0부터
+	   			evtCnt=0;
+	   			if(dayEvt !=null) {
+	   				//해당 일자의 이벤트 건수를 저장
+	   				evtCnt=dayEvt.length;
+	   			}
+	   			
+	   			%>
 	   			<div>
-	   			<a href="diary.jsp?param_year=${nowYear}&param_month=${nowMonth}&param_day=<%=tempDay %>&pageFlag=write_form">
+	   			<a href="#void" onclick="writeEvt(${nowYear},${nowMonth},<%=tempDay %>,'write_form',<%=evtCnt%>)">
 	   			<span class="<%=dayClass %>"><%=tempDay %></span></a>
+	   			</div>
+	   			<div>
+	   				<%if(dayEvt !=null) {  
+	   					for(int i=0; i<dayEvt.length; i++) {
+	   						tempSubject=dayEvt[i].getSubject();
+	   						if(tempSubject.length()>20) {//?
+	   							tempSubject=tempSubject.substring(0,20)+"...";
+	   						}//end if
+	   				%>
+	   				<img src="images/evtflag.png" title="<%=tempSubject%>">
+	   				<%
+	   					}//end for
+	   				}//end if%>
 	   			</div>
 	   		</td>
 	   		<%	
@@ -340,6 +387,18 @@ $(function name() {
 	   		}
 
 	   	 }//end for
+	   	 
+	   	}catch(SQLException se){
+	   		se.printStackTrace();
+	   		%>
+	   		<tr>
+	   			<td colspan="7" style="text-align: center; height: 400px;">
+	   			<img src="images/construction.jpg" title="죄송"/>
+	   			</td>
+	   		</tr>
+	   		<%
+	   		
+	   	}
 	   	%>
 	   </table>
 	   

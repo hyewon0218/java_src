@@ -22,6 +22,7 @@ try{
 	session.setAttribute("writeFlag", true);
 	%>
 	alert("이벤트가 정상적으로 등록되었습니다.");
+	location.href="diary.jsp?param_year=${param.param_year}&param_month=${param.param_month}";
 	<%
 }catch(SQLException se) {
 	%>

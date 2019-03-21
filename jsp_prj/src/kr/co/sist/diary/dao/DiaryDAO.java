@@ -2,6 +2,7 @@ package kr.co.sist.diary.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,51 @@ public class DiaryDAO {
 	public  MonthVO[][] selectMonthEvent(String year,String month)throws SQLException {
 		MonthVO[][] mv=new MonthVO[31][];
 		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//1.
+		//2.
+		//3.
+			con=getConn();
+		//4.
+			//입력되는 년,월에 대해 일자별 쿼리를 수행하여 Variable Array에 저장
+			StringBuilder selectMonthData=new StringBuilder();
+			selectMonthData
+			.append(" select num,subject ")
+			.append(" from diary ")
+			.append(" where e_year=? and e_month=?and e_day=?");
+			
+			pstmt=con.prepareStatement(selectMonthData.toString());
+			pstmt.setString(1, year);
+			pstmt.setString(2, month);
+			
+			//5.
+			List<MonthVO> list=new ArrayList<MonthVO>();
+			for(int i=0; i<31; i++) {//해당 년월의 
+				pstmt.setString(3, String.valueOf(i+1));//1일부터 31일까지 쿼리를 수행
+				rs=pstmt.executeQuery();
+				while(rs.next()) {//실행결과가 존재한다면 해당 일자에 글이 존재하므로 
+					//이벤트글의값을 저장한다.
+					list.add(new MonthVO(rs.getInt("num"),rs.getString("subject")));
+				}//end while
+				rs.close();
+				if(list.size()!=0) {//해당일자에 글이 존재한다면
+					MonthVO[] mvoArr=new MonthVO[list.size()];//글을 저장할 배열 생성
+					list.toArray(mvoArr);//리스트에 존재하는 값을 일차원 배열에 복사
+					mv[i]=mvoArr;//일차원 배열의 값을 가변배열의 i행에 추가
+				}
+				list.clear();//리스트를 초기화한다.
+			}
+			
+		}finally{
+		//6.
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			if(con!=null) {con.close();}
+		}
 		return mv;
 	}//selectMonthEvent
 	

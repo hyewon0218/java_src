@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.io.File"%>
@@ -47,7 +48,10 @@
   	%>
   	<tr>
   		<td><%=i+1 %></td>
-  		<td><a href="download.jsp?file_name=<%=temp.getName() %>"><%=temp.getName()%></a></td>
+  		<!-- 한글파일명을 링크<a>로 전송할 때에는 인토딩을 해주어야 값이 올바르게 전송된다.  
+  		<form>으로 넘길 때에는 브라우저에서 인코딩을 해주므로 개발자가 인코딩을 할 필요가 없다,
+  		-->
+  		<td><a href="download.jsp?file_name=<%=URLEncoder.encode(temp.getName(),"UTF-8") %>"><%=temp.getName()%></a></td>
   		<td><%=sdf.format(new Date(temp.lastModified())) %></td>
   		<td><%=temp.length() %>byte</td>
   	</tr>

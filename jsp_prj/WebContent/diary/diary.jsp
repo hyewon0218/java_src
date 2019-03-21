@@ -19,9 +19,11 @@
 #footerTitle{ float:right; font-size: 15px; padding-top:20px; padding-right: 20px }
 /*달력설정  */
 #diaryTab{margin: 0px auto; border-spacing: 0px; border: 1px solid #CECECE}
-.sunTitle{width: 100px; height: 25px; border: 1px solid #CECECE;font-weight:bold; color:#FFFFFF; background-color:#FF2626 ;}
-.weekTitle{width: 100px; height: 25px; border: 1px solid #CECECE; }
-.satTitle{width: 100px; height: 25px; border: 1px solid #CECECE; font-weight:bold; color:#FFFFFF; background-color:#0000FF ;}
+#diaryContent{position:relative; }
+#diaryJob{position:absolute; top:50px; left: 150px; }
+.sunTitle{width: 100px; height: 25px; border: 1px solid #CECECE;font-weight:bold; color:#FFFFFF; background-color:#FF2626 ;text-align: center;}
+.weekTitle{width: 100px; height: 25px; border: 1px solid #CECECE;text-align: center; }
+.satTitle{width: 100px; height: 25px; border: 1px solid #CECECE; font-weight:bold; color:#FFFFFF; background-color:#0000FF ;text-align: center;}
 #diaryTitle{text-align: center; margin-bottom: 10px; margin-top: 20px;}
 #diaryToday{width: 100px; font-family: 고딕체;font-size: 27px; font-weight: bold; }
 .diaryTd{width: 100px; height: 60px; border: 1px solid #CECECE; text-align: right; vertical-align:top; font-size: 14px; font-weight: bold}
@@ -30,9 +32,10 @@
 .sunColor{ font-size: 15px; color:#FF2626 }   
 .weekColor{ color:#222222 }   
 .satColor{ font-size: 15px; color:#0000D8 }   
+#writeFrm{background-color: #FFFFFF; border: 1px solid #dfdfdf; box-shadow: 5px 5px 5px#444444; padding: 10px; }
 /* 달력설정 끝 */
 </style>
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
@@ -98,7 +101,7 @@
     bottom: -20px;
     top: auto;
   }
-  </style>
+  </style> -->
   <script type="text/javascript">
   
   		function moveMonth(month,year) {
@@ -112,7 +115,43 @@
 			$("[name='diaryFrm']").submit();
 			
 		}//moveMonth
+		
+	
   </script>
+  <!--summernote 관련 library 시작  -->
+
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="../common/summernote/bootstrap.css" rel="stylesheet">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="../common/summernote/bootstrap.js"></script> 
+
+<!-- include summernote css/js -->
+<link href="../common/summernote/summernote-lite.css" rel="stylesheet">
+<script src="../common/summernote/summernote-lite.min.js"></script>
+<script src="../common/summernote/lang/summernote-ko-KR.js"></script>
+<script type="text/javascript">
+$(function() {
+	  $('#summernote').summernote({
+		  	placeholder: '이벤트를 작성해주세요.',
+	        tabsize: 2,
+	        height: 150,
+	        width: 390,
+	        lang: 'ko-KR'
+	  });
+	});
+</script>
+
+<!--summernote 관련 library 끝  -->
+<script type="text/javascript">
+
+$(function name() {
+	$("#btnCloseFrm").click(function() {
+		location.href="diary.jsp";
+	});//click
+});//ready
+
+</script>
+
 </head>
 <body>
 <div id="wrap">
@@ -138,6 +177,8 @@
    	//0 1 2 3 (java 0부터 시작)
    	
    	String param_month=request.getParameter("param_month");
+   	cal.set(Calendar.DAY_OF_MONTH, 1);//요청했을 때 해당 달에 없는 일이 존재한다면 
+   	//다음 달 1일로 설정되기 때문에 모든 달에 존재하는 날짜로 일을 설정한다.
    	if(param_month !=null && !"".equals(param_month)) {//파라메터 월이 존재하면 현재 캘린더 객체의 월을 변경
    	cal.set(Calendar.MONTH, Integer.parseInt(param_month)-1);
    	}//end if
@@ -178,7 +219,7 @@
    		<a href="#void" onclick="moveMonth('','')" ><img alt="" src="images/btn_today.png" title="오늘"/></a>
    		<!-- <a href="diary.jsp" ><img alt="" src="images/btn_today.png" title="오늘"/></a> -->
    </div>
-   <div id="diaryContent"></div>
+   <div id="diaryContent">
 	   <table id="diaryTab">
 	   	<tr>
 	   		<th class="sunTitle">일</th>
@@ -251,7 +292,10 @@
 			}//end if
 	   		%>
 	   		<td class="<%=todayCss %>">
-	   			<div><span class="<%=dayClass %>"><%=tempDay %></span></div>
+	   			<div>
+	   			<a href="diary.jsp?param_year=${nowYear}&param_month=${nowMonth}&param_day=<%=tempDay %>&pageFlag=write_form">
+	   			<span class="<%=dayClass %>"><%=tempDay %></span></a>
+	   			</div>
 	   		</td>
 	   		<%	
 	   		//토요일이라면 줄 변경
@@ -262,9 +306,15 @@
 
 	   	 }//end for
 	   	%>
-	   	
 	   </table>
+	   
+	   <div id="diaryJob">
+	   <c:if test="${not empty param.pageFlag }">
+	   		<c:import url="${param.pageFlag }.jsp"/>
+	   		</c:if>
+	   </div>
    </div>
+   </div><!--어디까지?  -->
    
    </div>
    <div id="footer">

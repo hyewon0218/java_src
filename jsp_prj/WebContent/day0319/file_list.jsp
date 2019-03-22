@@ -4,6 +4,7 @@
 <%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,11 +21,15 @@
 #footer{ width: 800px; height:120px;}
 #footerTitle{ float:right; font-size: 15px; padding-top:20px; padding-right: 20px }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body>
 <div id="wrap">
    <div id="header">
          <div id="headerTitle"> SIST Class4</div>
+           <div style="padding-top: 100px;">
+         <c:import url="../common/jsp/main_menu.jsp"/>
+         </div>
          </div>
    <div id="container">
    <%
@@ -66,6 +71,7 @@
    </div>
    <div id="footer">
       <div id="footerTitle">copyright&copy; all reserved. class 4 </div>
+      
    </div>
 </div>
 

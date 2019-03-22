@@ -40,6 +40,7 @@
 .weekColor{ color:#222222 }   
 .satColor{ font-size: 15px; color:#0000D8 }   
 #writeFrm{background-color: #FFFFFF; border: 1px solid #dfdfdf; box-shadow: 5px 5px 5px#444444; padding: 10px; }
+#readFrm{background-color: #FFFF99; border: 1px solid #dfdfdf; box-shadow: 5px 5px 5px#1C2E6B; padding: 10px; }
 /* 달력설정 끝 */
 </style>
  <!--summernote 관련 library 시작  -->
@@ -154,7 +155,7 @@ $(function() {
 <script type="text/javascript">
 
 $(function name() {
-	$("#btnCloseFrm").click(function() {
+	$("#btnWriteClose").click(function() {
 		//location.href="diary.jsp?param_year=${param.param_year}&param_month=${param.param_month}";
 		//닫혀질때도년과월을줘야 
 		moveMonth("${param.param_month}","${param.param_year}")
@@ -189,7 +190,34 @@ $(function name() {
 		}
 		$("[name='writeFrm']").submit();
 	});//click
+	
+	$("#btnUpdate").click(function () {
+		if($("#summernote").val()=="") {
+			alert("이벤트내용은 필수입력입니다.");
+			$("#summernote").focus();
+			return;
+		}
+		if($("#pass").val()=="") {
+			alert("비밀번호는 필수입력입니다.");
+			$("#pass").focus();
+			return;
+		}
+		$("[name='pageFlag']").val("update_process");
+		$("[name='readFrm']").submit();
+		
+	}); 
+	$("#btnRemove").click(function () {
+		if($("#pass").val()=="") {
+			alert("비밀번호는 필수입력입니다.");
+			$("#pass").focus();
+			return;
+		}
+		$("[name='pageFlag']").val("delete_process");
+		$("[name='readFrm']").submit();
+	}); 
 });//ready
+
+
 function writeEvt(year,month,day,pageFlag,evtCnt) {
 	
 	if(evtCnt>4) {
@@ -201,13 +229,26 @@ function writeEvt(year,month,day,pageFlag,evtCnt) {
 	$("[name='param_day']").val(day);
 	$("[name='pageFlag']").val(pageFlag);
 	$("[name='diaryFrm']").submit();
-}
+}//writeEvt
+
+function readEvt(num, year, month, day) {
+	$("[name='param_year']").val(year);
+	$("[name='param_month']").val(month);
+	$("[name='param_day']").val(day);
+	$("[name='pageFlag']").val("read_form");
+	$("[name='num']").val(num);
+	$("[name='diaryFrm']").submit();
+}//readEvt
+
 </script>
 </head>
 <body>
 <div id="wrap">
    <div id="header">
          <div id="headerTitle"> SIST Class4</div>
+         <div style="padding-top: 100px;">
+         <c:import url="../common/jsp/main_menu.jsp"/>
+         </div>
          </div>
    <div id="container">
    
@@ -257,7 +298,9 @@ function writeEvt(year,month,day,pageFlag,evtCnt) {
    	pageContext.setAttribute("nowMonth", nowMonth);
    	pageContext.setAttribute("nowDay", nowDay);
    %>
+   <!--사용자에게보여지지않는폼 값숨겨서넘기기  -->
    <form method="post" action="diary.jsp" name="diaryFrm"  >
+   		<input type="hidden" name="num"/>
    		<input type="hidden" name="param_month"/>
    		<input type="hidden" name="param_year"/>
    		<input type="hidden" name="param_day"/>
@@ -289,7 +332,7 @@ function writeEvt(year,month,day,pageFlag,evtCnt) {
 		//요청되는 년, 월의 모든 이벤트를 조회(추가)
 		DiaryDAO d_dao=DiaryDAO.getInstance();
 	   	try{
-	   	MonthVO[][] monthEvtData=d_dao.selectMonthEvent(String.valueOf( nowYear),String.valueOf( nowMonth));
+	   	MonthVO[][] monthEvtData=d_dao.selectMonthEvent(String.valueOf(nowYear),String.valueOf(nowMonth));
 	   	MonthVO[] dayEvt=null;//해당 일에 글이 존재한다면 저장할 배열
 	   	
 	   	String tempSubject="";//20자 이상인 글을 잘라 ...을 붙이기 위해
@@ -362,7 +405,7 @@ function writeEvt(year,month,day,pageFlag,evtCnt) {
 	   			
 	   			%>
 	   			<div>
-	   			<a href="#void" onclick="writeEvt(${nowYear},${nowMonth},<%=tempDay %>,'write_form',<%=evtCnt%>)">
+	   			<a href="#void" onclick="writeEvt(${nowYear},${nowMonth},<%=tempDay %>,'write_form',<%=evtCnt%>)"><!--write_form',안넣어도됨  -->
 	   			<span class="<%=dayClass %>"><%=tempDay %></span></a>
 	   			</div>
 	   			<div>
@@ -373,7 +416,8 @@ function writeEvt(year,month,day,pageFlag,evtCnt) {
 	   							tempSubject=tempSubject.substring(0,20)+"...";
 	   						}//end if
 	   				%>
-	   				<img src="images/evtflag.png" title="<%=tempSubject%>">
+	   				<a href="#void" onclick="readEvt(<%=dayEvt[i].getNum()
+	   				%>,${nowYear},${nowMonth},<%=tempDay%>)"><img src="images/evtflag.png" title="<%=tempSubject%>"></a>
 	   				<%
 	   					}//end for
 	   				}//end if%>

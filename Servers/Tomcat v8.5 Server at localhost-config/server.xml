@@ -152,14 +152,11 @@
       
       
       
-      <Context docBase="cbe" path="/cbe" reloadable="true" source="org.eclipse.jst.jee.server:cbe"/>
+      
       <Context docBase="jsp_prj" path="/jsp_prj" reloadable="true" source="org.eclipse.jst.jee.server:jsp_prj">
-      <Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" 
-            maxIdle="10" maxTotal="20" maxWaitMillis="-1" 
-            name="jdbc/jsp_dbcp" password="tiger" type="javax.sql.DataSource" 
-            url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" username="scott"/>
+      <Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" maxIdle="10" maxTotal="20" maxWaitMillis="-1" name="jdbc/jsp_dbcp" password="tiger" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" username="scott"/>
       </Context>
-      </Host>
+      <Context docBase="third_prj" path="/third_prj" reloadable="true" source="org.eclipse.jst.jee.server:third_prj"/><Context docBase="html_prj" path="/html_prj" reloadable="true" source="org.eclipse.jst.jee.server:html_prj"/></Host>
     </Engine>
   </Service>
 </Server>

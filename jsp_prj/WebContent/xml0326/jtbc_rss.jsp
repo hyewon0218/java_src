@@ -76,7 +76,7 @@ td{padding: 3px;}
 		<tr>
 			<td style="width: 50px;text-align: center; border-right: 1px solid #333">제목</td>
 			<td colspan="3" style="width: 650px;">
-				<c:out value="${news.title }"/>
+				<c:out value="${news.title }" />
 			</td>
 		</tr>
 		<tr>
@@ -92,7 +92,7 @@ td{padding: 3px;}
 		<tr>
 			<td style="width: 50px;text-align: center; border-right: 1px solid #333">설명</td>
 			<td colspan="3" style="height: 50px; width:650px;text-align: left ";>
-				<c:out value="${news.description }"/>
+				<c:out value="${news.description }" escapeXml="false"/>
 			</td>
 		</tr>
 		

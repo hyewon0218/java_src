@@ -294,4 +294,14 @@
     <servlet-name>id_dup</servlet-name>
     <url-pattern>/id_dup</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>testtest_test</display-name>
+    <servlet-name>testtest_test</servlet-name>
+    <servlet-class>test.Test</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>testtest_test</servlet-name>
+    <url-pattern>/testtest_test</url-pattern>
+  </servlet-mapping>
 </web-app>

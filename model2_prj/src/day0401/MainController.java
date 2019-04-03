@@ -19,7 +19,8 @@ public class MainController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.sendRedirect("day0401/hello/jsp");
-		RequestDispatcher rd=request.getRequestDispatcher("day0401/hello.jsp");
+		//RequestDispatcher rd=request.getRequestDispatcher("day0401/hello.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("day0402/view.jsp");
 		rd.forward(request, response);
 		
 	}//doPost

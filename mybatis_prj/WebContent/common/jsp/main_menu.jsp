@@ -45,6 +45,13 @@
                 <li><a href="main.jsp?page=day0405/like">like의 조회</a></li>
               </ul>
             </li>
+           <li><a href="#void">3일차</a>
+              <ul>
+                <li><a href="main.jsp?page=day0408/subquery">subquery</a></li>
+                <li><a href="main.jsp?page=day0408/union">union</a></li>
+                <li><a href="main.jsp?page=day0408/join">join</a></li>
+              </ul>
+            </li>
           </ul>
         </li>
       </ul>

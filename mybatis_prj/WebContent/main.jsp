@@ -21,7 +21,7 @@
 <script type="text/javascript">
 	$(function (){
 		
-	});//ready
+	});//readyz
 </script>
 </head>
 <body>

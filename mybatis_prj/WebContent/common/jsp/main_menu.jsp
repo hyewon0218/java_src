@@ -52,8 +52,16 @@
                 <li><a href="main.jsp?page=day0408/join">join</a></li>
               </ul>
             </li>
+           <li><a href="#void">4일차</a>
+              <ul>
+                <li><a href="main.jsp?page=day0409/join_subquery">join+subquery</a></li>
+                <li><a href="main.jsp?page=day0409/dynamic_table">테이블명이 동적일때</a></li>
+                <li><a href="main.jsp?page=day0409/dynamic_if">dynamic if 상황에 따른 다른 쿼리를 실행</a></li>
+              </ul>
+            </li>
           </ul>
         </li>
+        <li><a href="main.jsp?page=day0410/car">동기방식 차량조회</a></li>
       </ul>
     </nav>
     

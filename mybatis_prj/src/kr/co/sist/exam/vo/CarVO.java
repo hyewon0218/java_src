@@ -1,16 +1,17 @@
 package kr.co.sist.exam.vo;
 
+import java.util.List;
+
 public class CarVO {
+	private List<String> makerList;
 
-	private String car;
-
-	public CarVO(String car) {
+	public CarVO(List<String> makerList) {
 		super();
-		this.car = car;
+		this.makerList = makerList;
 	}
 
-	public String getCar() {
-		return car;
+	public List<String> getMakerList() {
+		return makerList;
 	}
 	
 	

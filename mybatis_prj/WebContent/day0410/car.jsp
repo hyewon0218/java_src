@@ -96,7 +96,7 @@ $(function (){
 	<tr style="border-bottom: 1px solid #333;">
 		<td width="80">이미지</td>
 		<td width="400">차량정보</td>
-		<td width="150">등록일</td>
+		<td width="150">년식</td>
 	</tr>
 	<c:if test="${empty carList }">
 	<tr>

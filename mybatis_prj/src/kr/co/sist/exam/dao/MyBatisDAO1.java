@@ -1,5 +1,6 @@
 package kr.co.sist.exam.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -12,9 +13,11 @@ import kr.co.sist.exam.domain.Emp;
 import kr.co.sist.exam.domain.EmpJoin;
 import kr.co.sist.exam.domain.Union;
 import kr.co.sist.exam.domain.Zipcode;
+import kr.co.sist.exam.vo.CarVO;
 import kr.co.sist.exam.vo.DeptnoVO;
 import kr.co.sist.exam.vo.DiaryListParamVO;
 import kr.co.sist.exam.vo.EmpVO;
+import kr.co.sist.exam.vo.TestProcVO;
 import kr.co.sist.exam.vo.TnameVO;
 
 public class MyBatisDAO1 {
@@ -121,12 +124,38 @@ public class MyBatisDAO1 {
 		
 		return list;
 	}//dynamicIf
-
 	
+	public List<DynamicIf> dynamicChoose(DeptnoVO dvo) {
+		List<DynamicIf> list=null;
+		
+		SqlSession ss=MyBatisDAO.getInstance().getSessionFactory().openSession();
+		list=ss.selectList("kr.co.sist.exam2.dynamicChoose",dvo);
+		
+		return list;
+	}//dynamicChoose
+	
+	public List<Car> dynamicForeach(CarVO cv) {
+		List<Car> list=null;
+		
+		SqlSession ss=MyBatisDAO.getInstance().getSessionFactory().openSession();
+		list=ss.selectList("kr.co.sist.exam2.dynamicForeach",cv);
+		
+		return list;
+	}//dynamicForeach
+
+	public TestProcVO insertProc(TestProcVO tpvo) {
+		SqlSession ss=MyBatisDAO.getInstance().getSessionFactory().openSession();
+		System.out.println(tpvo.getMsg());
+		ss.selectOne("insertProcedure",tpvo);
+		return tpvo;
+	}//insertProc
 
 	
 	public static void main(String[] args) {
 		MyBatisDAO1 md=new MyBatisDAO1();
+		
+		TestProcVO tpvo=new TestProcVO(1111, 3000, 0, "공선의", "대리", "");
+		md.insertProc(tpvo);
 	}
 }//class
 

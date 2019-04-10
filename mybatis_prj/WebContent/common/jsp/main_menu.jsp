@@ -56,7 +56,14 @@
               <ul>
                 <li><a href="main.jsp?page=day0409/join_subquery">join+subquery</a></li>
                 <li><a href="main.jsp?page=day0409/dynamic_table">테이블명이 동적일때</a></li>
-                <li><a href="main.jsp?page=day0409/dynamic_if">dynamic if 상황에 따른 다른 쿼리를 실행</a></li>
+                <li><a href="main.jsp?page=day0409/dynamic_if">dynamic if </a></li>
+              </ul>
+            </li>
+           <li><a href="#void">5일차</a>
+              <ul>
+                <li><a href="main.jsp?page=day0410/dynamic_choose">dynamic choose</a></li>
+                <li><a href="main.jsp?page=day0410/dynamic_foreach">dynamic foreach</a></li>
+                <li><a href="main.jsp?page=day0410/insert_procedure">insert procedure</a></li>
               </ul>
             </li>
           </ul>

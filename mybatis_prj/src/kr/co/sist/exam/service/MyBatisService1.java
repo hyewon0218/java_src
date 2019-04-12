@@ -14,6 +14,7 @@ import kr.co.sist.exam.domain.EmpJoin;
 import kr.co.sist.exam.domain.Union;
 import kr.co.sist.exam.domain.Zipcode;
 import kr.co.sist.exam.vo.CarVO;
+import kr.co.sist.exam.vo.CursorVO;
 import kr.co.sist.exam.vo.DeptnoVO;
 import kr.co.sist.exam.vo.DiaryListParamVO;
 import kr.co.sist.exam.vo.EmpVO;
@@ -193,6 +194,11 @@ public class MyBatisService1 {
 		tpvo=mb_dao.insertProc(tpvo);
 		return tpvo; 
 	}//insertProcedure
+	
+	public void selectProc(CursorVO c_vo) {
+		MyBatisDAO1 mb_dao=new MyBatisDAO1();
+		mb_dao.selectProc(c_vo);
+	}//selectProc
 	
 }//class
 

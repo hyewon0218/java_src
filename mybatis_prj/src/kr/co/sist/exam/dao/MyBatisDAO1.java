@@ -14,11 +14,13 @@ import kr.co.sist.exam.domain.EmpJoin;
 import kr.co.sist.exam.domain.Union;
 import kr.co.sist.exam.domain.Zipcode;
 import kr.co.sist.exam.vo.CarVO;
+import kr.co.sist.exam.vo.CursorVO;
 import kr.co.sist.exam.vo.DeptnoVO;
 import kr.co.sist.exam.vo.DiaryListParamVO;
 import kr.co.sist.exam.vo.EmpVO;
 import kr.co.sist.exam.vo.TestProcVO;
 import kr.co.sist.exam.vo.TnameVO;
+import kr.co.sist.exam.vo.TransactionVO;
 
 public class MyBatisDAO1 {
 	public List<Emp> multiParam(EmpVO ev) {
@@ -149,13 +151,34 @@ public class MyBatisDAO1 {
 		ss.selectOne("insertProcedure",tpvo);
 		return tpvo;
 	}//insertProc
+	
+	public void selectProc(CursorVO c_vo) {
+		
+		SqlSession ss=MyBatisDAO.getInstance().getSessionFactory().openSession();
+		ss.selectOne("selectProcedure",c_vo);
+	}//selectProc
 
+	public int insertTransaction(TransactionVO t_vo) {
+		int cnt=0,cnt1=0;
+		SqlSession ss=MyBatisDAO.getInstance().getSessionFactory().openSession();
+		
+		cnt=ss.insert("tr1",t_vo);
+		cnt1=ss.insert("tr2", t_vo);
+		
+		if((cnt+cnt1)==2) {
+			ss.commit();
+		}else {
+			
+		}
+		return cnt+cnt1;
+		
+	}//insertTransaction
 	
 	public static void main(String[] args) {
 		MyBatisDAO1 md=new MyBatisDAO1();
+		TransactionVO tv=new TransactionVO("¿À´ÃÀº ¸ñ¿ç", "±èÁ¤À±");
 		
-		TestProcVO tpvo=new TestProcVO(1111, 3000, 0, "°ø¼±ÀÇ", "´ë¸®", "");
-		md.insertProc(tpvo);
+		System.out.println(md.insertTransaction(tv));
 	}
 }//class
 

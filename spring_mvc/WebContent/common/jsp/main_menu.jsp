@@ -40,6 +40,22 @@
     		document.hidFrm.submit();
     	}//sendPost
     	
+    	function requestString() {
+    		var url="request_string.do"
+    		if(confirm("문자열의 매개변수를 전송하시겠습니까?")) {
+    			url+="?name=jungyun"; 
+    		}
+    		location.href=url;
+    	}//requestString
+    	
+    	function requestInt() {
+    		var url="request_int.do"
+    		if(confirm("문자열의 매개변수를 전송하시겠습니까?")) {
+    			url+="?age=20"; 
+    		}
+    		location.href=url;
+    	}//requestString
+    	
     </script>
     <form action="request_post.do" name="hidFrm" id="hidFrm" method="post"></form>
 <!--smartmenu 끝-->
@@ -55,7 +71,17 @@
                 <li><a href="#void" onclick="sendPost()">POST방식 요청</a></li>
                 <li><a href="#void" onclick="requestAll()">GET/POST 모두 요청</a></li>
                 <li><a href="request_form.do">HttpServletRequest로 파라메터 처리</a></li>
-                <li><a href="request_vo_form.do">VO 파라메터 처리</a></li>
+                <li><a href="vo_form.do">VO 파라메터 처리</a></li>
+              </ul>
+            </li>
+            <li><a href="#void">2일차</a>
+              <ul>
+                <li><a href="#void" onclick="requestString()" >단일 데이터형 처리(문자열)</a></li>
+                <li><a href="#void" onclick="requestInt()" >단일 데이터형 처리(정수형)</a></li>
+                <li><a href="view_request.do" >HttpServletRequest사용 데이터전달</a></li>
+                <li><a href="view_model.do" >Model사용 데이터전달</a></li>
+                <li><a href="view_modelandview.do" >ModelAndView사용 데이터전달</a></li>
+                <li><a href="use_redirect.do" >리다이렉트 이동</a></li>
               </ul>
             </li>
         </ul>

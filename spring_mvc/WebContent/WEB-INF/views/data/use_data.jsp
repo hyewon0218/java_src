@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    info="controller에서 httpservletrequest를 사용하여 전달된 값을 처리하는 page" %>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="http://localhost:8080/jsp_prj/common/css/main_v20190130.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/spring_mvc/common/css/main_v20190130.css">
 <style type="text/css">
 #wrap{ margin:0px auto; width: 800px; height:860px;}
-#header{ width: 800px; height:140px;background: #FFFFFF url(http://localhost:8080/jsp_prj/common/images/header_bg.png); 
+#header{ width: 800px; height:140px;background: #FFFFFF url(http://localhost:8080/spring_mvc/common/images/header_bg.png); 
             position:relative;}
 #headerTitle{ font-family: HY견고딕,고딕; font-size: 35px; font-weight: bold; text-align: center; 
                position: absolute; top:40px; left:290px}
@@ -19,9 +20,9 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript">
-   $(function (){
-      
-   });//ready
+	$(function (){
+		
+	});//ready
 </script>
 </head>
 <body>
@@ -33,21 +34,19 @@
          </div>
          </div>
    <div id="container">
-   <ul>
-   	<li>vo로 값처리</li>
-      <li>${param.name }(${nameData })님 안녕하세요?</li>
-      <li>${param.age}(${ageData })살</li>
-      <li>
-      <c:if test="${empty langData }">관심언어가 없습니다.</c:if>
-      <c:forEach var="lang" items="${requestScope.langData }">
-      <c:out value="${lang }"></c:out>
-      </c:forEach>
-      </li>
-      <li>
-      <a href="#void" onclick="history.back();">다시입력</a>
-      <a href="#void" onclick="history.href='request_form.do'">다시입력</a>
-      </li>
-      </ul>
+   <div>값 전달한 객체 : <c:out value="${msg }"/></div>
+	<div style="width: 250px; height: 186px; float: right; background-image: url(http://localhost:8080/spring_mvc/common/images/postit.png) " >
+		<div style="margin-top: 35px; margin-left: 30px;">
+		<ul>
+		<li style="text-align: center; font-weight: bold;">공지사항</li>
+		<c:forEach var="notice"  items="${requestScope.req_data }">
+			<li style="margin-top: 4px;" >
+				<a href="notice_detail.do?num=${notice.num }"><c:out value="${notice.subject }"/></a>
+			</li>
+			</c:forEach>
+		</ul>
+		</div>
+	</div>
  </div>
    <div id="footer">
       <div id="footerTitle">copyright&copy; all reserved. class 4 </div>

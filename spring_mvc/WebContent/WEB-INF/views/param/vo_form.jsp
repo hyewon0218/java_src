@@ -33,7 +33,7 @@
          </div>
          </div>
    <div id="container">
-		<form action="use_vo_process.do">
+		<form action="vo_process.do">
 		<label>이름</label>
 		<input type="text" name="name" class="inputBox"><br/>
 		<label>나이</label>

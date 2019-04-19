@@ -30,7 +30,7 @@
     			alert("POST방식으로 요청합니다.")
     			method="POST";
     		}//else
-    			document.hidFrm.action="request_all.do";
+    			document.hidFrm.action="http://localhost:8080/spring_mvc/request_all.do";
     			document.hidFrm.method=method;
     			document.hidFrm.submit();
     	}//requestAll
@@ -45,7 +45,7 @@
     		if(confirm("문자열의 매개변수를 전송하시겠습니까?")) {
     			url+="?name=jungyun"; 
     		}
-    		location.href=url;
+    		location.href="http://localhost:8080/spring_mvc/"+url;
     	}//requestString
     	
     	function requestInt() {
@@ -53,7 +53,7 @@
     		if(confirm("문자열의 매개변수를 전송하시겠습니까?")) {
     			url+="?age=20"; 
     		}
-    		location.href=url;
+    		location.href="http://localhost:8080/spring_mvc/"+url;
     	}//requestString
     	
     </script>
@@ -67,27 +67,27 @@
           <ul>
             <li><a href="#void">1일차</a>
               <ul>
-                <li><a href="request_get.do">GET방식의 요청</a></li>
+                <li><a href="http://localhost:8080/spring_mvc/request_get.do">GET방식의 요청</a></li>
                 <li><a href="#void" onclick="sendPost()">POST방식 요청</a></li>
                 <li><a href="#void" onclick="requestAll()">GET/POST 모두 요청</a></li>
-                <li><a href="request_form.do">HttpServletRequest로 파라메터 처리</a></li>
-                <li><a href="vo_form.do">VO 파라메터 처리</a></li>
+                <li><a href="http://localhost:8080/spring_mvc/request_form.do">HttpServletRequest로 파라메터 처리</a></li>
+                <li><a href="http://localhost:8080/spring_mvc/vo_form.do">VO 파라메터 처리</a></li>
               </ul>
             </li>
             <li><a href="#void">2일차</a>
               <ul>
                 <li><a href="#void" onclick="requestString()" >단일 데이터형 처리(문자열)</a></li>
                 <li><a href="#void" onclick="requestInt()" >단일 데이터형 처리(정수형)</a></li>
-                <li><a href="view_request.do" >HttpServletRequest사용 데이터전달</a></li>
-                <li><a href="view_model.do" >Model사용 데이터전달</a></li>
-                <li><a href="view_modelandview.do" >ModelAndView사용 데이터전달</a></li>
-                <li><a href="use_redirect.do" >리다이렉트 이동</a></li>
+                <li><a href="http://localhost:8080/spring_mvc/view_request.do" >HttpServletRequest사용 데이터전달</a></li>
+                <li><a href="http://localhost:8080/spring_mvc/view_model.do" >Model사용 데이터전달</a></li>
+                <li><a href="http://localhost:8080/spring_mvc/view_modelandview.do" >ModelAndView사용 데이터전달</a></li>
+                <li><a href="http://localhost:8080/spring_mvc/use_redirect.do" >리다이렉트 이동</a></li>
               </ul>
             </li>
             <li><a href="#void">3일차</a>
               <ul>
-                <li><a href="session/use_session.do" >HttpSession 사용</a></li>
-                <li><a href="session/an_use_session.do" >@SessionAttribute 사용</a></li>
+                <li><a href="http://localhost:8080/spring_mvc/session/use_session.do" >HttpSession 사용</a></li>
+                <li><a href="http://localhost:8080/spring_mvc/session/an_use_session.do" >@SessionAttribute 사용</a></li>
               </ul>
             </li>
             <li><a href="#void">4일차</a>
@@ -96,6 +96,18 @@
                 <li><a href="cookie/read_an_cookie.do" >@CookieValue 사용한 값얻기</a></li>
                 <li><a href="include/include.do" >JSP include</a></li>
                 <li><a href="ajax/ajax.do" >ajax include</a></li>
+              </ul>
+            </li>
+            <li><a href="#void">5일차</a>
+              <ul>
+                <li><a href="diary/list.do" >일정보기</a></li>
+              </ul>
+            </li>
+            <li><a href="#void">6일차</a>
+              <ul>
+                <li><a href="exception/exception.do" >Controller에서 예외처리</a></li>
+                <li><a href="chain/chain_a.do" >chain_a.do 요청</a></li>
+                <li><a href="chain/chain_b.do" >chain_b.do 요청</a></li>
               </ul>
             </li>
         </ul>

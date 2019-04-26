@@ -33,8 +33,23 @@
          </div>
          </div>
    <div id="container">
-		<a href="add_form.do">정보추가</a>
+   		<a href="add_form.do">정보추가</a>
 		<a href="search_member.do">정보조회</a>
+	<div>
+		<c:choose>
+		<c:when test="${empty memberData }">
+			조회된 회원이 존재하지 않습니다.
+		</c:when>
+		<c:otherwise>
+			<ul>
+				<li>이름 : <c:out value="${memberData.name }" escapeXml=""></c:out></li>
+				<li>출신고 : <c:out value="${memberData.highschool}"></c:out></li>
+				<li>출신고 : <c:out value="${memberData.loc}"></c:out></li>
+			</ul>
+		</c:otherwise>
+		
+		</c:choose>
+	</div>
  </div>
    <div id="footer">
       <div id="footerTitle">copyright&copy; all reserved. class 4 </div>
@@ -43,3 +58,26 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

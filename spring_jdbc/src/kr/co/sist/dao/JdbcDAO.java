@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import kr.co.sist.domain.Member;
 import kr.co.sist.domain.MemberDetail;
+import kr.co.sist.domain.MemberImg;
+import kr.co.sist.vo.MemberUpdateVO;
 import kr.co.sist.vo.MemberVO;
 @Component
 public class JdbcDAO {
@@ -67,9 +69,38 @@ public class JdbcDAO {
 		System.out.println(md);
 		
 		return md;
-	}
+	}//selectOneMember
 	
+	public int updateMember(MemberUpdateVO muv) throws DataAccessException{
+		int cnt=0;
+		
+		String updateMember="update test_like set name=?,highschool=?, loc=? where num=?";
+		cnt=jt.update(updateMember, muv.getName(), muv.getHighschool(), muv.getLoc(),muv.getNum());
+		
+		return cnt;
+	}//updateMember
 
+	public MemberImg deleteMember(int num)throws DataAccessException{
+		MemberImg mi=null;
+		
+		String selectImg="select img from test_like where num=?";
+		
+		RowMapper<MemberImg> rm=new RowMapper<MemberImg>() {//조회된결과저장
+			@Override
+			public MemberImg mapRow(ResultSet rs, int idx) throws SQLException {
+				MemberImg mi=new MemberImg(0,rs.getString("img"));
+				return mi;
+			}//mapRow
+		};
+		
+		mi=jt.queryForObject(selectImg,rm, num);
+		
+		String deleteMember="delete from test_like where num=?";
+		
+		mi.setCnt(jt.update(deleteMember,num));//num=bind변수에 들어갈 값
+		
+		return mi;
+	}
 }//class
 
 

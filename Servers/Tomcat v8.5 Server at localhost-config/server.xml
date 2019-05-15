@@ -156,7 +156,7 @@
       <Context docBase="jsp_prj" path="/jsp_prj" reloadable="true" source="org.eclipse.jst.jee.server:jsp_prj">
       <Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" maxIdle="10" maxTotal="20" maxWaitMillis="-1" name="jdbc/jsp_dbcp" password="tiger" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" username="scott"/>
       </Context>
-      <Context docBase="third_prj" path="/third_prj" reloadable="true" source="org.eclipse.jst.jee.server:third_prj"/><Context docBase="html_prj" path="/html_prj" reloadable="true" source="org.eclipse.jst.jee.server:html_prj"/>
+      <Context docBase="html_prj" path="/html_prj" reloadable="true" source="org.eclipse.jst.jee.server:html_prj"/>
       <Context docBase="model2_prj" path="/model2_prj" reloadable="true" source="org.eclipse.jst.jee.server:model2_prj">
 	      <Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" maxIdle="10" maxTotal="20" maxWaitMillis="-1" name="jdbc/model_dbcp" password="tiger" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" username="scott"/>
       </Context>
@@ -165,7 +165,7 @@
       <Context docBase="model2_emp" path="/model2_emp" reloadable="true" source="org.eclipse.jst.jee.server:model2_emp">
 	      <Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" maxIdle="10" maxTotal="20" maxWaitMillis="-1" name="jdbc/model2_dbcp" password="tiger" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl" username="scott"/>
       </Context>
-      <Context docBase="spring_mvc" path="/spring_mvc" reloadable="true" source="org.eclipse.jst.jee.server:spring_mvc"/><Context docBase="spring_jdbc" path="/spring_jdbc" reloadable="true" source="org.eclipse.jst.jee.server:spring_jdbc"/><Context docBase="spring_orm" path="/spring_orm" reloadable="true" source="org.eclipse.jst.jee.server:spring_orm"/><Context docBase="spring_aop" path="/spring_aop" reloadable="true" source="org.eclipse.jst.jee.server:spring_aop"/></Host>
+      <Context docBase="spring_mvc" path="/spring_mvc" reloadable="true" source="org.eclipse.jst.jee.server:spring_mvc"/><Context docBase="spring_jdbc" path="/spring_jdbc" reloadable="true" source="org.eclipse.jst.jee.server:spring_jdbc"/><Context docBase="spring_orm" path="/spring_orm" reloadable="true" source="org.eclipse.jst.jee.server:spring_orm"/><Context docBase="spring_aop" path="/spring_aop" reloadable="true" source="org.eclipse.jst.jee.server:spring_aop"/><Context docBase="third_prj" path="/third_prj" reloadable="true" source="org.eclipse.jst.jee.server:third_prj"/></Host>
       
     </Engine>
   </Service>
